@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="proyecto_final">
+  <ClassDiagramComponents>
+    <Class name="Comprador" package="" visibility="public" xPosition="90.0" yPosition="86.0">
+      <Fields>
+        <Field name="dni" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="fechaNac" type="Date" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="medioPago" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Comprador" returnType="ctro" visibility="public">
+          <Argument type="int" name="dni"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="Date" name="fechaNac"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="medioPago"/>
+        </Method>
+        <Method name="getDni" returnType="int" visibility="public"/>
+        <Method name="setDni" returnType="int" visibility="public">
+          <Argument type="int" name="dni"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="String" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getFechaNac" returnType="Date" visibility="public"/>
+        <Method name="setFechaNac" returnType="Date" visibility="public">
+          <Argument type="Date" name="fechaNac"/>
+        </Method>
+        <Method name="getPassword" returnType="String" visibility="public"/>
+        <Method name="setPassword" returnType="String" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="getMedioPago" returnType="String" visibility="public"/>
+        <Method name="setMedioPago" returnType="String" visibility="public">
+          <Argument type="String" name="medioPago"/>
+        </Method>
+        <Method name="comprarTicket" returnType="void" visibility="public"/>
+        <Method name="verHistorialCompras" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Ticket" package="" visibility="public" xPosition="90.0" yPosition="590.0">
+      <Fields>
+        <Field name="codigoVenta" type="int" visibility="private"/>
+        <Field name="fechaCompra" type="Date" visibility="private"/>
+        <Field name="medioPago" type="String" visibility="private"/>
+        <Field name="precio" type="double" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Ticket" returnType="ctro" visibility="public">
+          <Argument type="int" name="codigoVenta"/>
+          <Argument type="Date" name="fechaCompra"/>
+          <Argument type="String" name="medioPago"/>
+          <Argument type="double" name="precio"/>
+        </Method>
+        <Method name="getCodigoVenta" returnType="int" visibility="public"/>
+        <Method name="setCodigoVenta" returnType="int" visibility="public">
+          <Argument type="int" name="codigoVenta"/>
+        </Method>
+        <Method name="getFechaCompra" returnType="Date" visibility="public"/>
+        <Method name="setFechaCompra" returnType="Date" visibility="public">
+          <Argument type="Date" name="fechaCompra"/>
+        </Method>
+        <Method name="getMedioPago" returnType="String" visibility="public"/>
+        <Method name="setMedioPago" returnType="String" visibility="public">
+          <Argument type="String" name="medioPago"/>
+        </Method>
+        <Method name="getPrecio" returnType="double" visibility="public"/>
+        <Method name="setPrecio" returnType="double" visibility="public">
+          <Argument type="double" name="precio"/>
+        </Method>
+        <Method name="imprimirTicket" returnType="void" visibility="public"/>
+        <Method name="validarTicket" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Pelicula" package="" visibility="public" xPosition="1391.0" yPosition="86.0">
+      <Fields>
+        <Field name="titulo" type="String" visibility="private"/>
+        <Field name="director" type="String" visibility="private"/>
+        <Field name="actores" type="String" visibility="private"/>
+        <Field name="origen" type="String" visibility="private"/>
+        <Field name="genero" type="String" visibility="private"/>
+        <Field name="estreno" type="Date" visibility="private"/>
+        <Field name="enCartelera" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Pelicula" returnType="ctro" visibility="public">
+          <Argument type="String" name="titulo"/>
+          <Argument type="String" name="director"/>
+          <Argument type="String" name="actores"/>
+          <Argument type="String" name="origen"/>
+          <Argument type="String" name="genero"/>
+          <Argument type="Date" name="estron"/>
+          <Argument type="Boolean" name="enCartelera"/>
+        </Method>
+        <Method name="getTitulo" returnType="String" visibility="public"/>
+        <Method name="setTitulo" returnType="String" visibility="public">
+          <Argument type="String" name="titulo"/>
+        </Method>
+        <Method name="getDirector" returnType="String" visibility="public"/>
+        <Method name="setDirector" returnType="String" visibility="public">
+          <Argument type="String" name="director"/>
+        </Method>
+        <Method name="getActores" returnType="String" visibility="public"/>
+        <Method name="setActores" returnType="String" visibility="public">
+          <Argument type="String" name="actores"/>
+        </Method>
+        <Method name="getOrigen" returnType="String" visibility="public"/>
+        <Method name="setOrigen" returnType="String" visibility="public">
+          <Argument type="String" name="origen"/>
+        </Method>
+        <Method name="getGenero" returnType="String" visibility="public"/>
+        <Method name="setGenero" returnType="String" visibility="public">
+          <Argument type="String" name="genero"/>
+        </Method>
+        <Method name="getEstreno" returnType="Date" visibility="public"/>
+        <Method name="setEstreno" returnType="Date" visibility="public">
+          <Argument type="Date" name="estreno"/>
+        </Method>
+        <Method name="getEnCartelera" returnType="Boolean" visibility="public"/>
+        <Method name="setEnCartelera" returnType="Boolean" visibility="public">
+          <Argument type="Boolean" name="enCartelera"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Proyeccion" package="" visibility="public" xPosition="1389.0" yPosition="753.0">
+      <Fields>
+        <Field name="idioma" type="String" visibility="private"/>
+        <Field name="es3D" type="Boolean" visibility="private"/>
+        <Field name="subtitulada" type="Boolean" visibility="private"/>
+        <Field name="horaInicio" type="Time" visibility="private"/>
+        <Field name="horaFin" type="Time" visibility="private"/>
+        <Field name="precioLugar" type="double" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Proyeccion" returnType="ctro" visibility="public">
+          <Argument type="String" name="idioma"/>
+          <Argument type="Boolean" name="es3D"/>
+          <Argument type="Boolean" name="subtitulada"/>
+          <Argument type="Time" name="horaInicio"/>
+          <Argument type="Time" name="horaFin"/>
+          <Argument type="double" name="precioLugar"/>
+        </Method>
+        <Method name="getIdioma" returnType="String" visibility="public"/>
+        <Method name="setIdioma" returnType="String" visibility="public">
+          <Argument type="String" name="idioma"/>
+        </Method>
+        <Method name="getEs3D" returnType="Boolean" visibility="public"/>
+        <Method name="setEs3D" returnType="Boolean" visibility="public">
+          <Argument type="Boolean" name="es3D"/>
+        </Method>
+        <Method name="getSubtitulada" returnType="Boolean" visibility="public"/>
+        <Method name="setSubtitulada" returnType="Boolean" visibility="public">
+          <Argument type="Boolean" name="subtitulada"/>
+        </Method>
+        <Method name="getHoraInicio" returnType="Time" visibility="public"/>
+        <Method name="setHoraInicio" returnType="Time" visibility="public">
+          <Argument type="Time" name="horaInicio"/>
+        </Method>
+        <Method name="getHoraFin" returnType="Time" visibility="public"/>
+        <Method name="setHoraFin" returnType="Time" visibility="public">
+          <Argument type="Time" name="horaFin"/>
+        </Method>
+        <Method name="getPrecioLugar" returnType="double" visibility="public"/>
+        <Method name="setPrecioLugar" returnType="double" visibility="public">
+          <Argument type="double" name="precioLugar"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Asiento" package="" visibility="public" xPosition="801.0" yPosition="887.0">
+      <Fields>
+        <Field name="fila" type="char" visibility="private"/>
+        <Field name="numero" type="int" visibility="private"/>
+        <Field name="disponible" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Asiento" returnType="ctro" visibility="public">
+          <Argument type="char" name="fila"/>
+          <Argument type="int" name="numero"/>
+          <Argument type="Boolean" name="disponible"/>
+        </Method>
+        <Method name="getFila" returnType="char" visibility="public"/>
+        <Method name="setFila" returnType="char" visibility="public">
+          <Argument type="char" name="fila"/>
+        </Method>
+        <Method name="getNumero" returnType="int" visibility="public"/>
+        <Method name="setNumero" returnType="int" visibility="public">
+          <Argument type="int" name="numero"/>
+        </Method>
+        <Method name="getDisponible" returnType="Boolean" visibility="public"/>
+        <Method name="setDisponible" returnType="Boolean" visibility="public">
+          <Argument type="Boolean" name="disponible"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Sala" package="" visibility="public" xPosition="785.0" yPosition="86.0">
+      <Fields>
+        <Field name="nroSala" type="int" visibility="private"/>
+        <Field name="apta3D" type="boolean" visibility="private"/>
+        <Field name="capacidad" type="int" visibility="private"/>
+        <Field name="estado" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="Sala" returnType="ctro" visibility="public">
+          <Argument type="int" name="nroSala"/>
+          <Argument type="boolean" name="apta3D"/>
+          <Argument type="int" name="capacidad"/>
+          <Argument type="String" name="estado"/>
+        </Method>
+        <Method name="getNroSala" returnType="int" visibility="public"/>
+        <Method name="setNroSala" returnType="void" visibility="public">
+          <Argument type="int" name="nroSala"/>
+        </Method>
+        <Method name="getApta3D" returnType="boolean" visibility="public"/>
+        <Method name="setApta3D" returnType="void" visibility="public">
+          <Argument type="boolean" name="apta3D"/>
+        </Method>
+        <Method name="getCapacidad" returnType="int" visibility="public"/>
+        <Method name="setCapacidad" returnType="void" visibility="public">
+          <Argument type="int" name="capacidad"/>
+        </Method>
+        <Method name="getEstado" returnType="String" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="String" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="." source="Sala" target="Asiento" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Proyeccion" target="Asiento" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Ticket" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Proyeccion" target="Ticket" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Ticket" target="Comprador" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Ticket" target="Asiento" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Comprador" target="Ticket" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Proyeccion" target="Sala" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Asiento" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Pelicula" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Proyeccion" target="Pelicula" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="." source="Pelicula" target="Sala" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Sala" target="Proyeccion" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="." source="Asiento" target="Ticket" type="Default" sourceCardinality="0..1" targetCardinality="0..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
