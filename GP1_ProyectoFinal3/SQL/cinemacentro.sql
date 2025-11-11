@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2025 a las 23:57:40
+-- Tiempo de generación: 11-11-2025 a las 03:09:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,11 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asiento` (
-  `id_lugar` bigint(20) NOT NULL,
-  `fila` int(5) NOT NULL,
+  `id_lugar` int(11) NOT NULL,
+  `fila` varchar(10) NOT NULL,
   `numero` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL,
-  `id_proyeccion` int(11) NOT NULL
+  `id_proyeccion` int(11) NOT NULL,
+  `id_sala` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +97,8 @@ CREATE TABLE `proyeccion` (
   `subtitulada` tinyint(1) NOT NULL,
   `horaInicio` time NOT NULL,
   `horaFin` time NOT NULL,
-  `precio` double NOT NULL
+  `precio` double NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -136,7 +138,9 @@ CREATE TABLE `ticket_compra` (
 --
 ALTER TABLE `asiento`
   ADD PRIMARY KEY (`id_lugar`),
-  ADD KEY `id_proyeccion` (`id_proyeccion`);
+  ADD UNIQUE KEY `fila` (`fila`,`numero`),
+  ADD KEY `id_proyeccion` (`id_proyeccion`),
+  ADD KEY `id_sala` (`id_sala`);
 
 --
 -- Indices de la tabla `comprador`
@@ -170,7 +174,9 @@ ALTER TABLE `proyeccion`
 -- Indices de la tabla `sala`
 --
 ALTER TABLE `sala`
-  ADD PRIMARY KEY (`id_Sala`);
+  ADD PRIMARY KEY (`id_Sala`),
+  ADD UNIQUE KEY `NroSala` (`NroSala`),
+  ADD UNIQUE KEY `NroSala_2` (`NroSala`);
 
 --
 -- Indices de la tabla `ticket_compra`
@@ -187,7 +193,7 @@ ALTER TABLE `ticket_compra`
 -- AUTO_INCREMENT de la tabla `asiento`
 --
 ALTER TABLE `asiento`
-  MODIFY `id_lugar` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ticket`
@@ -199,19 +205,19 @@ ALTER TABLE `detalle_ticket`
 -- AUTO_INCREMENT de la tabla `pelicula`
 --
 ALTER TABLE `pelicula`
-  MODIFY `id_pelicula` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pelicula` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `proyeccion`
 --
 ALTER TABLE `proyeccion`
-  MODIFY `id_proyeccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_proyeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `sala`
 --
 ALTER TABLE `sala`
-  MODIFY `id_Sala` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -221,7 +227,8 @@ ALTER TABLE `sala`
 -- Filtros para la tabla `asiento`
 --
 ALTER TABLE `asiento`
-  ADD CONSTRAINT `asiento_ibfk_1` FOREIGN KEY (`id_proyeccion`) REFERENCES `proyeccion` (`id_proyeccion`);
+  ADD CONSTRAINT `asiento_ibfk_1` FOREIGN KEY (`id_proyeccion`) REFERENCES `proyeccion` (`id_proyeccion`),
+  ADD CONSTRAINT `asiento_ibfk_2` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id_Sala`);
 
 --
 -- Filtros para la tabla `detalle_ticket`

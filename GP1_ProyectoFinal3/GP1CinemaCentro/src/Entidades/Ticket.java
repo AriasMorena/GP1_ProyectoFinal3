@@ -89,7 +89,7 @@ public class Ticket {
         }else{
             System.out.println("Ticket válido.");
         }
-    } 
+    }
     
     @Override
     public String toString(){

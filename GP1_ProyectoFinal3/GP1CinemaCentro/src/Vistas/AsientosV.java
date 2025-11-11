@@ -4,17 +4,33 @@
  */
 package Vistas;
 
+import Entidades.*;
+import Persistencia.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author lucio
  */
 public class AsientosV extends javax.swing.JInternalFrame {
+    
+  private DefaultTableModel modelo = new DefaultTableModel();
+    
 
     /**
      * Creates new form Asientos
      */
     public AsientosV() {
         initComponents();
+        cabecera();
+        cargarComboP();
+        cargarCombosS();
+        limpiar();
     }
 
     /**
@@ -38,17 +54,15 @@ public class AsientosV extends javax.swing.JInternalFrame {
         jcbSalas = new javax.swing.JComboBox<>();
         jcEstado = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
-        jbGuardar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jtID = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jbBaja = new javax.swing.JButton();
+        jbAlta = new javax.swing.JButton();
+        jbLiberar = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAsientos = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jbMostrar = new javax.swing.JButton();
+        jbSalir = new javax.swing.JButton();
+        jbGenerar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -56,27 +70,41 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Fila:");
 
+        jcbFilas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbFilasActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Numero:");
 
         jLabel4.setText("Proyeccion:");
 
         jLabel5.setText("Sala:");
 
+        jcbProyeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProyeccionActionPerformed(evt);
+            }
+        });
+
+        jcbSalas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSalasActionPerformed(evt);
+            }
+        });
+
         jcEstado.setText("Libre");
 
         jLabel6.setText("Estado:");
 
-        jbGuardar.setText("Guardar");
+        jbBaja.setText("Dar de Baja");
 
-        jLabel7.setText("ID Asiento:");
+        jbAlta.setText("Dar de Alta");
 
-        jButton2.setText("Modificar");
+        jbLiberar.setText("Liberar");
 
-        jButton3.setText("Eliminar");
-
-        jButton4.setText("Liberar");
-
-        jButton5.setText("Buscar");
+        jbBuscar.setText("Buscar");
 
         jtAsientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,12 +119,19 @@ public class AsientosV extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtAsientos);
 
-        jButton6.setText("Mostrar");
+        jbMostrar.setText("Mostrar");
 
-        jButton7.setText("Salir");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jbSalirActionPerformed(evt);
+            }
+        });
+
+        jbGenerar.setText("Generear");
+        jbGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGenerarActionPerformed(evt);
             }
         });
 
@@ -107,45 +142,43 @@ public class AsientosV extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbAlta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbLiberar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jcbFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcbProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbFilas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jcbSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbSalas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcEstado)
-                            .addComponent(jcbNumero, 0, 186, Short.MAX_VALUE)
-                            .addComponent(jtID))))
-                .addGap(66, 66, 66))
+                            .addComponent(jcbNumero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jcbProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addGap(66, 66, 66))
+                .addComponent(jbSalir)
+                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addGap(250, 250, 250)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,54 +193,80 @@ public class AsientosV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jcbProyeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbGuardar))
+                    .addComponent(jbGenerar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jcbSalas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jbBaja))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcbFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jbAlta))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jcbNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jbLiberar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcEstado)
                     .addComponent(jLabel6)
-                    .addComponent(jButton5))
+                    .addComponent(jbBuscar))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                .addComponent(jbMostrar)
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addComponent(jbSalir)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jcbProyeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProyeccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbProyeccionActionPerformed
+
+    private void jbGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarActionPerformed
+       // TODO add your handling code here:
+       generarAsiento();
+       limpiar ();
+    }//GEN-LAST:event_jbGenerarActionPerformed
+
+    private void jcbFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFilasActionPerformed
+        // TODO add your handling code here:
+   
+        Sala salaSel = (Sala) jcbSalas.getSelectedItem();
+        String filaSel = (String) jcbFilas.getSelectedItem();
+        
+        if (salaSel != null && filaSel != null) {
+            
+            cargarNumerosPorFilas ();
+        }
+    }//GEN-LAST:event_jcbFilasActionPerformed
+
+    private void jcbSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSalasActionPerformed
+        // TODO add your handling code here:
+         
+        Sala salaSeleccionado = (Sala) jcbSalas.getSelectedItem();
+        
+        if (salaSeleccionado != null) {
+            
+            cargarFilas ();
+        }
+         
+    }//GEN-LAST:event_jcbSalasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -215,15 +274,143 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbAlta;
+    private javax.swing.JButton jbBaja;
+    private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbGenerar;
+    private javax.swing.JButton jbLiberar;
+    private javax.swing.JButton jbMostrar;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JCheckBox jcEstado;
     private javax.swing.JComboBox<String> jcbFilas;
     private javax.swing.JComboBox<String> jcbNumero;
-    private javax.swing.JComboBox<String> jcbProyeccion;
-    private javax.swing.JComboBox<String> jcbSalas;
+    private javax.swing.JComboBox<Object> jcbProyeccion;
+    private javax.swing.JComboBox<Object> jcbSalas;
     private javax.swing.JTable jtAsientos;
-    private javax.swing.JTextField jtID;
     // End of variables declaration//GEN-END:variables
+
+    private void generarAsiento(){
+        
+        AsientoData ad = new AsientoData();
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (ad.existeAsiento(salaS.getIdSala())) {
+            
+            int opcion = JOptionPane.showConfirmDialog(null, "Esta sala ya tiene asientos. ¿Deseas generarlos nuevamente?", " Confirmar " , JOptionPane.YES_NO_OPTION);
+            
+            if (opcion == JOptionPane.YES_OPTION) {
+                
+                ad.generarAsientos(salaS, proy);
+            }
+        } else {
+            
+            ad.generarAsientos(salaS, proy);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //------------ Vistas ------------
+    
+    private void cargarComboP(){
+        
+        jcbProyeccion.removeAll();
+        ProyeccionData proyD = new ProyeccionData();
+        
+        for (Proyeccion p: proyD.listarProyecciones()) {
+            
+            if (!p.isEstado() == false) {
+                
+                jcbProyeccion.addItem(p);
+            }
+        }
+    }
+    
+    private void cargarCombosS(){
+        jcbSalas.removeAllItems();
+        SalaData salaD = new SalaData ();
+        
+        for (Sala s: salaD.listarSala()) {
+            
+            if (!s.getEstado().equalsIgnoreCase("Inhabilitado")) {
+                
+                jcbSalas.addItem(s);
+
+            }
+        }
+    }
+    
+    private void cargarFilas (){
+        
+        jcbFilas.removeAllItems();
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        
+        AsientoData asientoD = new AsientoData();
+        
+        List<String> filas = asientoD.obtenerFilas(salaS.getIdSala());
+        
+        for (String fila : filas){
+            
+            jcbFilas.addItem(fila);
+        }   
+    }
+    
+      private void cargarNumerosPorFilas (){
+        
+        
+        jcbNumero.removeAllItems();
+        
+        String fila = (String) jcbFilas.getSelectedItem();
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        
+        AsientoData asientoD = new AsientoData();
+        
+        List <String> numeros = asientoD.obtenerNumeros(fila, salaS.getIdSala());
+        
+        for (String num : numeros) {
+            
+            jcbNumero.addItem(num);
+        }
+        
+        
+    }
+    
+    
+    private void limpiar(){
+        
+        jcbProyeccion.setSelectedItem(-1);
+        jcbSalas.setSelectedItem(-1);
+        jcbFilas.setSelectedItem(-1);
+        jcbNumero.setSelectedItem(-1);
+        jcEstado.setSelected(false);
+    }
+    private void cabecera(){
+        
+        modelo.addColumn("ID Proyeccion");
+        modelo.addColumn("Nro Sala");
+        modelo.addColumn("Fila");
+        modelo.addColumn("Numero");
+        modelo.addColumn("Estado");
+        
+        jtAsientos.setModel(modelo);
+    }
 }
