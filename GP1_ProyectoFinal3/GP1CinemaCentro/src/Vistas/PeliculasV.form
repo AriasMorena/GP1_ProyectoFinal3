@@ -79,7 +79,6 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jtOrigen" min="-2" pref="263" max="-2" attributes="0"/>
                                   <Component id="jtGenero" alignment="0" min="-2" pref="263" max="-2" attributes="0"/>
-                                  <Component id="jdcEstreno" alignment="1" min="-2" pref="263" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -141,10 +140,7 @@
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jdcEstreno" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
@@ -311,8 +307,6 @@
     <Component class="javax.swing.JTextField" name="jtOrigen">
     </Component>
     <Component class="javax.swing.JTextField" name="jtGenero">
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jdcEstreno">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
