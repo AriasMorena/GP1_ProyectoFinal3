@@ -36,12 +36,12 @@
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="jbBaja" max="32767" attributes="0"/>
                   <Component id="jbAlta" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jbLiberar" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jbEliminar" alignment="1" max="32767" attributes="0"/>
                   <Component id="jbBuscar" alignment="1" max="32767" attributes="0"/>
                   <Component id="jbMostrar" alignment="1" max="32767" attributes="0"/>
                   <Component id="jbGenerar" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="179" max="32767" attributes="0"/>
+              <EmptySpace pref="193" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" pref="119" max="-2" attributes="0"/>
@@ -116,7 +116,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jcbNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbLiberar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -193,6 +193,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbProyeccionActionPerformed"/>
@@ -226,23 +227,35 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbBaja">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dar de Baja"/>
+        <Property name="text" type="java.lang.String" value="Ocupar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbBajaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbAlta">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dar de Alta"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jbLiberar">
-      <Properties>
         <Property name="text" type="java.lang.String" value="Liberar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAltaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbEliminar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbEliminarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbBuscar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbBuscarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -269,6 +282,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Mostrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbMostrarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbSalir">
       <Properties>

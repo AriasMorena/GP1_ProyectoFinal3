@@ -4,13 +4,11 @@
  */
 package Vistas;
 
-import Entidades.*;
 import Persistencia.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import Entidades.*;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +29,10 @@ public class AsientosV extends javax.swing.JInternalFrame {
         cargarComboP();
         cargarCombosS();
         limpiar();
+        jcbProyeccion.setSelectedIndex(-1);
+        jcbSalas.setSelectedIndex(-1);
+        jcbFilas.setSelectedIndex(-1);
+        jcbNumero.setSelectedIndex(-1);
     }
 
     /**
@@ -56,7 +58,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jbBaja = new javax.swing.JButton();
         jbAlta = new javax.swing.JButton();
-        jbLiberar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAsientos = new javax.swing.JTable();
@@ -82,6 +84,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Sala:");
 
+        jcbProyeccion.setToolTipText("");
         jcbProyeccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbProyeccionActionPerformed(evt);
@@ -98,13 +101,33 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Estado:");
 
-        jbBaja.setText("Dar de Baja");
+        jbBaja.setText("Ocupar");
+        jbBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBajaActionPerformed(evt);
+            }
+        });
 
-        jbAlta.setText("Dar de Alta");
+        jbAlta.setText("Liberar");
+        jbAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAltaActionPerformed(evt);
+            }
+        });
 
-        jbLiberar.setText("Liberar");
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jtAsientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,6 +143,11 @@ public class AsientosV extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtAsientos);
 
         jbMostrar.setText("Mostrar");
+        jbMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMostrarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -144,11 +172,11 @@ public class AsientosV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jbBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbAlta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbLiberar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +236,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jcbNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbLiberar))
+                    .addComponent(jbEliminar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcEstado)
@@ -238,7 +266,10 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private void jbGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarActionPerformed
        // TODO add your handling code here:
        generarAsiento();
-       limpiar ();
+       jcbProyeccion.setSelectedIndex(-1);
+       jcbSalas.setSelectedIndex(-1);
+       jcbFilas.setSelectedIndex(-1);
+       jcbNumero.setSelectedIndex(-1);
     }//GEN-LAST:event_jbGenerarActionPerformed
 
     private void jcbFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFilasActionPerformed
@@ -265,6 +296,43 @@ public class AsientosV extends javax.swing.JInternalFrame {
          
     }//GEN-LAST:event_jcbSalasActionPerformed
 
+    private void jbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMostrarActionPerformed
+        // TODO add your handling code here:
+        mostrarAsientosXSalas();
+        jcbProyeccion.setSelectedIndex(-1);
+        jcbSalas.setSelectedIndex(-1);
+        jcbFilas.setSelectedIndex(-1);
+        jcbNumero.setSelectedIndex(-1);
+    }//GEN-LAST:event_jbMostrarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        eliminarAsientos();
+        limpiar ();
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        buscarAsiento ();
+        limpiar ();
+
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBajaActionPerformed
+        // TODO add your handling code here:
+        ocupar();
+        limpiar ();
+
+    }//GEN-LAST:event_jbBajaActionPerformed
+
+    private void jbAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaActionPerformed
+        // TODO add your handling code here:
+        liberar();
+        limpiar ();
+
+    }//GEN-LAST:event_jbAltaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox4;
@@ -278,8 +346,8 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbAlta;
     private javax.swing.JButton jbBaja;
     private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGenerar;
-    private javax.swing.JButton jbLiberar;
     private javax.swing.JButton jbMostrar;
     private javax.swing.JButton jbSalir;
     private javax.swing.JCheckBox jcEstado;
@@ -298,36 +366,177 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         
-        if (ad.existeAsiento(salaS.getIdSala())) {
+        if (ad.existeAsiento(salaS.getIdSala()) && proy != null) {
             
-            int opcion = JOptionPane.showConfirmDialog(null, "Esta sala ya tiene asientos. ¿Deseas generarlos nuevamente?", " Confirmar " , JOptionPane.YES_NO_OPTION);
-            
-            if (opcion == JOptionPane.YES_OPTION) {
-                
-                ad.generarAsientos(salaS, proy);
-            }
+            JOptionPane.showMessageDialog(this, "Esta sala ya tiene asientos. No se pueden generar si hay asientos. ");
         } else {
             
             ad.generarAsientos(salaS, proy);
         }
     }
     
+    private void mostrarAsientosXSalas(){
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        AsientoData ad = new AsientoData();
+        
+        if (salaS == null) {
+            
+            JOptionPane.showMessageDialog(this, "Debe eligir una sala.");
+            return;
+        }
+        
+        modelo.setRowCount(0);
+        
+        List<Asiento> lista = ad.listarAsientos(salaS.getIdSala());
+        
+        for (Asiento a : lista) {
+            
+            String estado = "";
+            
+            if (a.isDisponible() == true) {
+                
+                estado = "Disponible";
+            } else {
+                
+                estado = "Ocupado";
+            }
+            
+            modelo.addRow(new Object []{
+                a.getProy().getIdProyeccion() ,
+                a.getSala().getNroSala() , 
+                a.getFila() ,
+                a.getNúmero() ,
+                estado    
+            });
+        }
+    }
     
+    private void eliminarAsientos(){
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        
+        AsientoData ad = new AsientoData();
+
+        
+        if (salaS == null) {
+            
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar una Sala");
+            return;
+        } else {
+        
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar todos los asientos de la sala " + salaS.getNroSala() + " ?", "Confirma eliminacion", JOptionPane.YES_NO_OPTION);
+        
+            if (confirm == JOptionPane.YES_OPTION) {
+            
+                ad.borrarAsientoPorSala(salaS.getIdSala());
+            }
+        }
+        
+        jcbNumero.removeAllItems();
+        jcbFilas.removeAllItems();
+    }
     
+    private void buscarAsiento (){
+        
+        modelo.setRowCount(0);
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String fila = (String) jcbFilas.getSelectedItem();
+        String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
+        int numero = Integer.parseInt(numeroStr);
+        
+        AsientoData ad = new AsientoData();
+        
+        Asiento asiento = ad.buscarAsiento(salaS.getIdSala(), fila, numero);
+        
+        if ( asiento != null) {
+            
+            String estado = "";
+            
+            if (asiento.isDisponible() == true) {
+                
+                estado = "Disponible";
+            } else {
+                
+                estado = "Ocupado";
+            }
+            
+            modelo.addRow(new Object []{
+                
+                asiento.getProy().getIdProyeccion(),
+                asiento.getSala().getNroSala(),
+                asiento.getFila(), 
+                asiento.getNúmero(),
+                estado
+            });
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "No se encontro ningun asiento.");
+        }
+    }
     
+    private void ocupar(){
+        
+        AsientoData ad = new AsientoData();
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String fila = (String) jcbFilas.getSelectedItem();
+        String texto = jcbNumero.getSelectedItem().toString();
+        String numeroStr = texto.split(" ")[0];
+        Integer numero = Integer.parseInt(numeroStr);
+        
+        if (salaS == null || fila == null || numero == null ) {
+            
+            JOptionPane.showMessageDialog(this, "Debe seleccionar sala, fila y numero");
+            return;
+        }
+        
+       Asiento asiento = ad.buscarAsiento(salaS.getIdSala(), fila, numero);
+        
+        if (asiento != null) {
+            
+            ad.ocuparAsiento(asiento.getIdAsiento());
+            JOptionPane.showMessageDialog(this, "Asiento Ocupado Correctamente.");
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "No se Encotro el asiento indicado");
+        }
+        
+        mostrarAsientosXSalas();
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //------------ Vistas ------------
+    private void liberar(){
+        
+        AsientoData ad = new AsientoData();
+        
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String fila = (String) jcbFilas.getSelectedItem();
+        String texto = jcbNumero.getSelectedItem().toString();
+        String numeroStr = texto.split(" ")[0];
+        Integer numero = Integer.parseInt(numeroStr);
+        
+        if (salaS == null || fila == null || numero == null ) {
+            
+            JOptionPane.showMessageDialog(this, "Debe seleccionar sala, fila y numero");
+            return;
+        }
+        
+        Asiento asiento = ad.buscarAsiento(salaS.getIdSala(), fila, numero);
+        
+        if (asiento != null) {
+            
+            ad.liberarAsiento(asiento.getIdAsiento());
+            JOptionPane.showMessageDialog(this, "Asiento Liberado Correctamente");
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "No se Encotro el asiento indicado");
+
+        }
+        
+        mostrarAsientosXSalas();
+    }
+   //------------ Vistas ------------
     
     private void cargarComboP(){
         
@@ -346,7 +555,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private void cargarCombosS(){
         jcbSalas.removeAllItems();
         SalaData salaD = new SalaData ();
-        
+                
         for (Sala s: salaD.listarSala()) {
             
             if (!s.getEstado().equalsIgnoreCase("Inhabilitado")) {
@@ -389,19 +598,15 @@ public class AsientosV extends javax.swing.JInternalFrame {
         for (String num : numeros) {
             
             jcbNumero.addItem(num);
-        }
-        
-        
+        }         
     }
-    
     
     private void limpiar(){
         
-        jcbProyeccion.setSelectedItem(-1);
-        jcbSalas.setSelectedItem(-1);
-        jcbFilas.setSelectedItem(-1);
-        jcbNumero.setSelectedItem(-1);
-        jcEstado.setSelected(false);
+        jcbProyeccion.setSelectedIndex(-1);
+        jcbSalas.setSelectedIndex(-1);
+        jcbFilas.setSelectedIndex(-1);
+        jcbNumero.setSelectedIndex(-1);
     }
     private void cabecera(){
         
@@ -412,5 +617,16 @@ public class AsientosV extends javax.swing.JInternalFrame {
         modelo.addColumn("Estado");
         
         jtAsientos.setModel(modelo);
+    }
+    
+    private void configurarColores (){
+        
+        jtAsientos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+                
+            
+            return c;
+            
+        });
     }
 }

@@ -29,6 +29,7 @@ public class AsientoData {
         con = conexion.getConexion();   
     }
     
+    // ------------ Agregar y Generar Asientos ------------
     public void agregarAsiento (Asiento asiento) {
     
         String sql = "INSERT INTO asiento (fila, numero, estado, id_proyeccion, id_sala)" + "VALUES (?, ?, ?, ?, ?)";
@@ -97,16 +98,14 @@ public class AsientoData {
         JOptionPane.showMessageDialog(null, "Se generaron " + contador + " asiento para la sala " + sala.getNroSala());
     }
     
-    public boolean existeAsiento (String fila, int numero , int idSala){
+    public boolean existeAsiento ( int idSala){
         
-        String sql = "SELECT 1 FROM asiento WHERE fila = ? AND numero = ? AND id_sala = ?";
+        String sql = "SELECT 1 FROM asiento WHERE id_sala = ?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
-            
-            ps.setString(1, fila);
-            ps.setInt(2, numero);
-            ps.setInt(3, idSala);
+           
+            ps.setInt(1, idSala);
             
             ResultSet rs= ps.executeQuery();
             
@@ -118,57 +117,32 @@ public class AsientoData {
         }
         return false;
     } 
+    // ------------ Buscar Asiento ------------
     
-    public void modificarAsiento (Asiento asiento){
-    
-        String sql = "UPDATE asiento SET fila = ?, numero = ?, estado = ?, id_proyeccion = ?, id_sala WHERE id_lugar = ?";
+    public Asiento buscarAsiento (int idSala, String fila, int numero) {
         
-            try {
-                PreparedStatement ps = con.prepareStatement(sql);
-
-                ps.setString(1, asiento.getFila());
-                ps.setInt(2, asiento.getNúmero());
-                ps.setBoolean(3, asiento.isDisponible());
-                ps.setInt(4, asiento.getProy().getIdProyeccion());
-                ps.setInt(5, asiento.getSala().getIdSala());
-                ps.setInt(6, asiento.getIdAsiento());
-                int filas = ps.executeUpdate();
-                
-                if(filas > 0){
-                
-                    JOptionPane.showMessageDialog(null, "Asiento modificado exitosamente.");    
-                } else {
-                    
-                    JOptionPane.showMessageDialog(null, "No se encontro un asiento con ese ID.");
-                }
-                
-                ps.close();
-                
-            } catch (SQLException ex) {
-               
-                JOptionPane.showMessageDialog(null, "Error al modificar el asiento" + ex.getMessage());
-            }  
-    }
-    
-    public Asiento buscarAsiento (int id_lugar) {
+        String sql = "SELECT * FROM asiento WHERE fila = ? AND numero = ? AND id_sala = ? ";
         
         ProyeccionData pd= new ProyeccionData();
+        
         SalaData sd = new SalaData();
     
-        Asiento asiento = null;
-        
-        String sql = "SELECT * FROM asiento WHERE id_lugar = ?";
-        
+        Asiento asiento = null;        
+       
         try {
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id_lugar);
+        
+        ps.setString(1, fila);
+        ps.setInt(2, numero);
+        ps.setInt(3, idSala);
+        
         ResultSet rs = ps.executeQuery();
                 
         if (rs.next()){
         
             asiento = new Asiento();
        
-            asiento.setIdAsiento(rs.getInt("id_asiento"));
+            asiento.setIdAsiento(rs.getInt("id_lugar"));
             asiento.setFila(rs.getString("fila"));
             asiento.setNúmero(rs.getInt("numero"));
             asiento.setDisponible(rs.getBoolean("estado"));
@@ -178,6 +152,7 @@ public class AsientoData {
             
             asiento.setProy(proy);
             asiento.setSala(sala); 
+            
         }
            ps.close();
            
@@ -187,64 +162,129 @@ public class AsientoData {
         }
        return asiento;
     }
+    // ------------ Elimar Asientos ------------
+    public void borrarAsientoPorSala (int idSala){
     
-    public void borrarAsiento (int id_lugar){
-    
-        String sql = "DELETE FROM asiento WHERE id_lugar = ?";
+        String sql = "DELETE FROM asiento WHERE id_sala = ?";
+        
+        SalaData sd = new SalaData ();
         
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, id_lugar);
-                int exito = ps.executeUpdate();
+                ps.setInt(1, idSala);
                 
-                if (exito == 1){
+                int fila = ps.executeUpdate();
+                
+                if (fila < 0){
                     
-                  JOptionPane.showMessageDialog(null, "Asiento borrado exitosamente.");
+                  JOptionPane.showMessageDialog(null, "Se eliminaron " + fila + " asientos de la sala Numero " + sd.buscarSala(idSala).getNroSala());
                 
                 }          
             } catch (SQLException ex) {
                
-                JOptionPane.showMessageDialog(null, "Error al borrar el asiento." + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al borrar los asientos." + ex.getMessage());
             }
     }
     
-    public List<Asiento>listarAsientos(){
+    // ------------ Mostrar Todos los Asientos de una Sala ------------
+    public List<Asiento>listarAsientos(int idSala){
         
         List<Asiento>listarAsientos = new ArrayList<>();
     
-        String sql = "SELECT * FROM asiento ";
+        String sql = "SELECT * FROM asiento WHERE id_sala = ? ORDER BY fila , numero ";
         
         ProyeccionData pd= new ProyeccionData();
         SalaData sd = new SalaData();
     
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
+                
+                ps.setInt(1, idSala);
+
+                ResultSet rs = ps.executeQuery();                
                 
                 while (rs.next()){
                 
                     Asiento asientos = new Asiento();
                
-                    asientos.setIdAsiento(rs.getInt("id_asiento"));
+                    asientos.setIdAsiento(rs.getInt("id_lugar"));
                     asientos.setFila(rs.getString("fila"));
                     asientos.setNúmero(rs.getInt("numero"));
                     asientos.setDisponible(rs.getBoolean("estado"));
                     
-                    asientos.setProy(pd.buscarProyeccion(rs.getInt("id_proyeccion")));
-                    asientos.setSala(sd.buscarSala(rs.getInt("id_sala")));           
+                    int idProy = rs.getInt("id_proyeccion");
+                    int idSalaB = rs.getInt("id_sala");
                     
+                    asientos.setProy(pd.buscarProyeccion(idProy));
+                    asientos.setSala(sd.buscarSala(idSalaB));
+                       
                     listarAsientos.add(asientos);
                 
                 }
                 ps.close();
+                
             } catch (SQLException ex) {
                 
                 JOptionPane.showMessageDialog(null, "Error al listar las salas." + ex.getMessage());
             }
+            
           return listarAsientos;
     }
-
-
+    // ------------ Ocupar y Liberar Asientos ------------
+    
+    public void ocuparAsiento(int idAs){
+        
+        String sql = "UPDATE asiento SET estado = false WHERE  id_lugar = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, idAs);
+            
+            int filas = ps.executeUpdate();
+            
+            if (filas > 0) {
+                
+                JOptionPane.showMessageDialog(null, "Asiento Ocupado");
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "No se encontro el asiento marcado.");
+            }
+        }catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al ocupar el asiento: " + ex.getMessage());
+        }
+       
+    }
+    
+    public void liberarAsiento(int idAs){
+        
+        String sql = "UPDATE asiento SET estado = true WHERE  id_lugar = ?";
+        
+            try{
+                PreparedStatement ps = con.prepareStatement(sql);
+            
+                ps.setInt(1, idAs);
+            
+                int filas = ps.executeUpdate();
+            
+                if (filas > 0) {
+                
+                    JOptionPane.showMessageDialog(null, "Asiento liberado");
+                } else {
+                
+                    JOptionPane.showMessageDialog(null, "No se encontro el asiento marcado.");
+                }
+            }catch (SQLException ex){
+            
+                JOptionPane.showMessageDialog(null, "Error al liberar el asiento: " + ex.getMessage());
+            }
+        
+    }
+    
+    // ------------ ComboBox Filas y Numeros ------------
+    
+    
 public List<String> obtenerFilas (int idSala){
     
     List<String> filas = new ArrayList<>();

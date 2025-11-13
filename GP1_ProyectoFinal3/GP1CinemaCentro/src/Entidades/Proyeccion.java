@@ -121,6 +121,7 @@ public class Proyeccion {
 
     @Override
     public String toString() {
+        
         return "Proyeccion: " + pelicula.getTitulo() + " Sala: " + sala.getNroSala();
     }
     

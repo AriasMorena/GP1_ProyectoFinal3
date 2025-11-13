@@ -67,6 +67,8 @@ public class Sala {
 
     @Override
     public String toString() {
+        
+        
         return idSala + " Numero de Sala: " + nroSala ;
     }
     
