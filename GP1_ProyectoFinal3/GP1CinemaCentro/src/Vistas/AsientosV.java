@@ -6,8 +6,11 @@ package Vistas;
 
 import Persistencia.*;
 import Entidades.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,10 +32,13 @@ public class AsientosV extends javax.swing.JInternalFrame {
         cargarComboP();
         cargarCombosS();
         limpiar();
+        configurarColores ();
+        /*
         jcbProyeccion.setSelectedIndex(-1);
         jcbSalas.setSelectedIndex(-1);
         jcbFilas.setSelectedIndex(-1);
         jcbNumero.setSelectedIndex(-1);
+        */
     }
 
     /**
@@ -54,10 +60,8 @@ public class AsientosV extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jcbProyeccion = new javax.swing.JComboBox<>();
         jcbSalas = new javax.swing.JComboBox<>();
-        jcEstado = new javax.swing.JCheckBox();
-        jLabel6 = new javax.swing.JLabel();
-        jbBaja = new javax.swing.JButton();
-        jbAlta = new javax.swing.JButton();
+        jbOcupar = new javax.swing.JButton();
+        jbLiberar = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -97,21 +101,17 @@ public class AsientosV extends javax.swing.JInternalFrame {
             }
         });
 
-        jcEstado.setText("Libre");
-
-        jLabel6.setText("Estado:");
-
-        jbBaja.setText("Ocupar");
-        jbBaja.addActionListener(new java.awt.event.ActionListener() {
+        jbOcupar.setText("Ocupar");
+        jbOcupar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbBajaActionPerformed(evt);
+                jbOcuparActionPerformed(evt);
             }
         });
 
-        jbAlta.setText("Liberar");
-        jbAlta.addActionListener(new java.awt.event.ActionListener() {
+        jbLiberar.setText("Liberar");
+        jbLiberar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAltaActionPerformed(evt);
+                jbLiberarActionPerformed(evt);
             }
         });
 
@@ -170,8 +170,8 @@ public class AsientosV extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jbBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbAlta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbOcupar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbLiberar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,13 +187,9 @@ public class AsientosV extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jcbSalas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcEstado)
-                            .addComponent(jcbNumero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jcbNumero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -226,22 +222,19 @@ public class AsientosV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jcbSalas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBaja))
+                    .addComponent(jbOcupar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcbFilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbAlta))
+                    .addComponent(jbLiberar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jcbNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbEliminar))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcEstado)
-                    .addComponent(jLabel6)
-                    .addComponent(jbBuscar))
+                .addComponent(jbBuscar)
                 .addGap(18, 18, 18)
                 .addComponent(jbMostrar)
                 .addGap(31, 31, 31)
@@ -265,11 +258,20 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
     private void jbGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarActionPerformed
        // TODO add your handling code here:
-       generarAsiento();
-       jcbProyeccion.setSelectedIndex(-1);
-       jcbSalas.setSelectedIndex(-1);
-       jcbFilas.setSelectedIndex(-1);
-       jcbNumero.setSelectedIndex(-1);
+       Sala salaS = (Sala) jcbSalas.getSelectedItem();
+       Proyeccion proyS = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (salaS == null || proyS == null) {
+            
+            JOptionPane.showMessageDialog(this, "Es necesario eligir Sala para Acceder a esta opcion.");
+            return;
+            
+        } else {
+            
+            generarAsiento();
+        }
+        
+        limpiar();
     }//GEN-LAST:event_jbGenerarActionPerformed
 
     private void jcbFilasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFilasActionPerformed
@@ -307,31 +309,77 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
         
-        eliminarAsientos();
+        if (salaS == null) {
+            
+            JOptionPane.showMessageDialog(this, "Es necesario eligir Sala para Acceder a esta opcion.");
+            return;
+            
+        } else {
+            
+            eliminarAsientos();
+        }
+        
         limpiar ();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-        buscarAsiento ();
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String filaS = (String) jcbFilas.getSelectedItem();
+        String numeroS = (String) jcbNumero.getSelectedItem();
+        
+        if (salaS == null || filaS == null || numeroS == null ) {
+            
+            JOptionPane.showMessageDialog(this, "Es necesario eligir Sala, Fila y Numero para Acceder a esta opcion.");
+            return;
+            
+        } else {
+            
+            buscarAsiento ();
+        }
         limpiar ();
 
     }//GEN-LAST:event_jbBuscarActionPerformed
 
-    private void jbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBajaActionPerformed
+    private void jbOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOcuparActionPerformed
         // TODO add your handling code here:
-        ocupar();
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String filaS = (String) jcbFilas.getSelectedItem();
+        String numeroS = (String) jcbNumero.getSelectedItem();
+        
+        if (salaS == null || filaS == null || numeroS == null ) {
+            
+            JOptionPane.showMessageDialog(this, "Es necesario eligir Sala, Fila y Numero para Acceder a esta opcion.");
+            return;
+            
+        } else {
+            
+            ocupar();
+        }
+        
         limpiar ();
+    }//GEN-LAST:event_jbOcuparActionPerformed
 
-    }//GEN-LAST:event_jbBajaActionPerformed
-
-    private void jbAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaActionPerformed
+    private void jbLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLiberarActionPerformed
         // TODO add your handling code here:
-        liberar();
+        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        String filaS = (String) jcbFilas.getSelectedItem();
+        String numeroS = (String) jcbNumero.getSelectedItem();
+        
+        if (salaS == null || filaS == null || numeroS == null ) {
+            
+            JOptionPane.showMessageDialog(this, "Es necesario eligir Sala, Fila y Numero para Acceder a esta opcion.");
+            return;
+            
+        } else {
+         
+            liberar();
+        }
+        
         limpiar ();
-
-    }//GEN-LAST:event_jbAltaActionPerformed
+    }//GEN-LAST:event_jbLiberarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -341,16 +389,14 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbAlta;
-    private javax.swing.JButton jbBaja;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGenerar;
+    private javax.swing.JButton jbLiberar;
     private javax.swing.JButton jbMostrar;
+    private javax.swing.JButton jbOcupar;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JCheckBox jcEstado;
     private javax.swing.JComboBox<String> jcbFilas;
     private javax.swing.JComboBox<String> jcbNumero;
     private javax.swing.JComboBox<Object> jcbProyeccion;
@@ -622,11 +668,37 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private void configurarColores (){
         
         jtAsientos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            
             @Override
+        
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+                    
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    
+                    String estado = table.getValueAt(row, 4).toString();
+                    
+                    if (estado.equalsIgnoreCase("Disponible")) {
+                        c.setBackground(new Color(144, 238, 144));                   
+                    
+                    } else {
+                        
+                        if (estado.equalsIgnoreCase("Ocupado")) {
+                            
+                            c.setBackground(new Color(255, 102, 102));
+                        } else {
+                            
+                            c.setBackground(Color.WHITE);
+                        }
+                    }
+                    
+                    if (isSelected) {
+                    
+                        c.setBackground(new Color (135, 206, 250));
+                    }
                 
             
             return c;
-            
+                }
         });
     }
 }
