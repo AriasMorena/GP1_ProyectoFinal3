@@ -2,43 +2,44 @@
 package Entidades;
 
 import java.util.Date;
+import Entidades.Comprador;
 /**
  *
  * @author Bustos Guada
  */
 public class Ticket {
     
-    private int codigoVenta;
+    private int idTicket;
     private Date fechaCompra;
     private String medioPago;
     private double precio;
-    private Proyeccion proyeccion;
+    private Comprador comprador;
 
-    public Ticket(int codigoVenta, Date fechaCompra, String medioPago, double precio, Proyeccion proyeccion) {
-        this.codigoVenta = codigoVenta;
+    public Ticket(int idTicket, Date fechaCompra, String medioPago, double precio, Comprador comprador) {
+        this.idTicket = idTicket;
         this.fechaCompra = fechaCompra;
         this.medioPago = medioPago;
         this.precio = precio;
-        this.proyeccion = proyeccion;
+        this.comprador = comprador;
     }
 
     public Ticket() {
     }
 
-    public Proyeccion getProyeccion() {
-        return proyeccion;
+    public Comprador getComprador() {
+        return comprador;
     }
 
-    public void setProyeccion(Proyeccion proyeccion) {
-        this.proyeccion = proyeccion;
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
     }
     
-    public int getCodigoVenta() {
-        return codigoVenta;
+    public int getIdTicket() {
+        return idTicket;
     }
 
-    public void setCodigoVenta(int codigoVenta) {
-        this.codigoVenta = codigoVenta;
+    public void setIdTicket(int idTicket) {
+        this.idTicket = idTicket;
     }
 
     public Date getFechaCompra() {
@@ -68,7 +69,7 @@ public class Ticket {
     public void imprimirTicket(){
         System.out.println("------------------TICKET------------------");
         
-        System.out.println("Código de venta: " + codigoVenta);
+        System.out.println("Código de venta: " + idTicket);
         System.out.println("Fecha de compra: " + fechaCompra);
         System.out.println("Medio de pago: " + medioPago);
         System.out.println("Precio: $" + precio);
@@ -78,7 +79,7 @@ public class Ticket {
     }
     
     public void validarTicket(){
-        if(codigoVenta <= 0){
+        if(idTicket <= 0){
             System.out.println("Código de venta inválido.");
         }else if (fechaCompra == null){
             System.out.println("Fecha de4 compra no asignada.");
@@ -94,7 +95,7 @@ public class Ticket {
     @Override
     public String toString(){
         return "Ticket{" +
-                "codigoVenta=" + codigoVenta +
+                "codigoVenta=" + idTicket +
                 ", fechaCompra=" + fechaCompra +
                 ", medioPago="  + medioPago +
                 ", precio=" + precio +
