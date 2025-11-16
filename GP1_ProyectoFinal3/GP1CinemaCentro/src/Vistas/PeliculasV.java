@@ -65,6 +65,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
         jbSalir = new javax.swing.JButton();
         jbAlta = new javax.swing.JButton();
         jbBaja = new javax.swing.JButton();
+        jdcEstreno = new com.toedter.calendar.JDateChooser();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -218,7 +219,8 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtOrigen, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                                    .addComponent(jtGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))))
+                                    .addComponent(jtGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                    .addComponent(jdcEstreno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(30, 30, 30)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -263,7 +265,9 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jdcEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -420,6 +424,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbBaja;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbSalir;
+    private com.toedter.calendar.JDateChooser jdcEstreno;
     private javax.swing.JTextField jtActores;
     private javax.swing.JButton jtBuscar;
     private javax.swing.JTextField jtDirector;

@@ -346,5 +346,40 @@ public List<String> obtenerNumeros (String fila, int idSala){
     return numeros;
     }
 
+    public Asiento buscarAsientoPorId(int idAsiento){
+        
+        Asiento asiento = null;
+        
+        String sql = "SELECT a.id_lugar , a.numero , a.fila , a.id_sala , a.estado "
+                + "FROM asiento a WHERE a.id_lugar = ? ";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idAsiento);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                asiento = new Asiento ();
+                asiento.setIdAsiento(rs.getInt("id_lugar"));
+                asiento.setNúmero(rs.getInt("numero"));
+                asiento.setFila(rs.getString("fila"));
+                asiento.setDisponible(rs.getBoolean("estado"));
+                
+                Sala s = new Sala();
+                s.setIdSala(rs.getInt("id_sala"));
+                asiento.setSala(s);
+            }
+            rs.close();
+            ps.close();
+        }catch (SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "ERROR: Al buscar Asiento: " + e.getMessage());
+        }
+        
+        return asiento;
+    }
+
 
 }

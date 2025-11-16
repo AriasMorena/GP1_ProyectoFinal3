@@ -1,8 +1,9 @@
 
 package Entidades;
 
-import java.util.Date;
 import Entidades.Comprador;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 /**
  *
  * @author Bustos Guada
@@ -10,30 +11,26 @@ import Entidades.Comprador;
 public class Ticket {
     
     private int idTicket;
-    private Date fechaCompra;
-    private String medioPago;
+    private LocalDate fechaCompra;
+    private LocalDateTime fechaFuncion;
     private double precio;
+    
     private Comprador comprador;
+    private Asiento asientoComprado;
 
-    public Ticket(int idTicket, Date fechaCompra, String medioPago, double precio, Comprador comprador) {
+    public Ticket(int idTicket, LocalDate fechaCompra, LocalDateTime fechaFuncion, double precio, Comprador comprador, Asiento asientoComprado) {
+        
         this.idTicket = idTicket;
         this.fechaCompra = fechaCompra;
-        this.medioPago = medioPago;
+        this.fechaFuncion = fechaFuncion;
         this.precio = precio;
         this.comprador = comprador;
+        this.asientoComprado = asientoComprado;
     }
-
+    
     public Ticket() {
     }
 
-    public Comprador getComprador() {
-        return comprador;
-    }
-
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
-    }
-    
     public int getIdTicket() {
         return idTicket;
     }
@@ -42,20 +39,20 @@ public class Ticket {
         this.idTicket = idTicket;
     }
 
-    public Date getFechaCompra() {
+    public LocalDate getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(Date fechaCompra) {
+    public void setFechaCompra(LocalDate fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
-    public String getMedioPago() {
-        return medioPago;
+    public LocalDateTime getFechaFuncion() {
+        return fechaFuncion;
     }
 
-    public void setMedioPago(String medioPago) {
-        this.medioPago = medioPago;
+    public void setFechaFuncion(LocalDateTime fechaFuncion) {
+        this.fechaFuncion = fechaFuncion;
     }
 
     public double getPrecio() {
@@ -65,31 +62,37 @@ public class Ticket {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    public Comprador getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
+    public Asiento getAsientoComprado() {
+        return asientoComprado;
+    }
+
+    public void setAsientoComprado(Asiento asientoComprado) {
+        this.asientoComprado = asientoComprado;
+    }
+    
+    
+
+    
     
     public void imprimirTicket(){
         System.out.println("------------------TICKET------------------");
         
         System.out.println("Código de venta: " + idTicket);
         System.out.println("Fecha de compra: " + fechaCompra);
-        System.out.println("Medio de pago: " + medioPago);
+        System.out.println("Fecha de Funcion: " + fechaFuncion);
         System.out.println("Precio: $" + precio);
         
         System.out.println("------------------------------------------");
         
-    }
-    
-    public void validarTicket(){
-        if(idTicket <= 0){
-            System.out.println("Código de venta inválido.");
-        }else if (fechaCompra == null){
-            System.out.println("Fecha de4 compra no asignada.");
-        }else if (medioPago == null || medioPago.isEmpty()){
-            System.out.println("Medio de pago no especificado.");
-        }else if(precio <= 0){
-            System.out.println("Precio inválido.");
-        }else{
-            System.out.println("Ticket válido.");
-        }
     }
     
     @Override
@@ -97,7 +100,7 @@ public class Ticket {
         return "Ticket{" +
                 "codigoVenta=" + idTicket +
                 ", fechaCompra=" + fechaCompra +
-                ", medioPago="  + medioPago +
+                ", fechaFuncion="  + fechaFuncion +
                 ", precio=" + precio +
                 "}";
     }
