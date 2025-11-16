@@ -5,6 +5,13 @@
     <Component class="javax.swing.JTextField" name="jTextField5">
     </Component>
   </NonVisualComponents>
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+        <LineBorder roundedCorners="true"/>
+      </Border>
+    </Property>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -42,7 +49,7 @@
                               <Component id="jtEliminar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                               <Component id="jbAlta" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="50" max="32767" attributes="0"/>
+                              <EmptySpace pref="56" max="32767" attributes="0"/>
                               <Component id="jbBaja" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -79,7 +86,6 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jtOrigen" pref="263" max="32767" attributes="0"/>
                                   <Component id="jtGenero" alignment="0" pref="263" max="32767" attributes="0"/>
-                                  <Component id="jdcEstreno" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -141,10 +147,7 @@
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="jdcEstreno" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
@@ -161,7 +164,7 @@
                   <Component id="jbAlta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbBaja" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" pref="29" max="32767" attributes="0"/>
+              <EmptySpace type="separate" pref="34" max="32767" attributes="0"/>
               <Component id="jtMostrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="249" max="-2" attributes="0"/>
@@ -388,8 +391,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbBajaActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jdcEstreno">
     </Component>
   </SubComponents>
 </Form>

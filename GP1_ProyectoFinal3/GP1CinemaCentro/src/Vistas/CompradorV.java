@@ -30,6 +30,7 @@ public class CompradorV extends javax.swing.JInternalFrame {
         initComponents();
         cabecera();      
         cargarMedios();
+        this.setLocation(300, 0);
     }
 
     /**
@@ -52,7 +53,6 @@ public class CompradorV extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jtDni = new javax.swing.JTextField();
         jtNombre = new javax.swing.JTextField();
-        jdtFechaN = new com.toedter.calendar.JDateChooser();
         jcbMedioP = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jtEliminar = new javax.swing.JButton();
@@ -72,6 +72,8 @@ public class CompradorV extends javax.swing.JInternalFrame {
                 jtDni3ActionPerformed(evt);
             }
         });
+
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -203,11 +205,10 @@ public class CompradorV extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jdtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jpContraseña)
                                             .addComponent(jpContraseña2)
                                             .addComponent(jcbMedioP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -259,10 +260,8 @@ public class CompradorV extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jdtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -291,7 +290,7 @@ public class CompradorV extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbSalir)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -424,7 +423,6 @@ public class CompradorV extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox jcMostrar;
     private javax.swing.JCheckBox jcMostrar2;
     private javax.swing.JComboBox<String> jcbMedioP;
-    private com.toedter.calendar.JDateChooser jdtFechaN;
     private javax.swing.JPasswordField jpContraseña;
     private javax.swing.JPasswordField jpContraseña2;
     private javax.swing.JTable jtComprador;

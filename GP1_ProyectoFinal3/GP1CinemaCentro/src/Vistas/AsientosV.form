@@ -13,6 +13,13 @@
       </AuxValues>
     </Component>
   </NonVisualComponents>
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+        <LineBorder roundedCorners="true"/>
+      </Border>
+    </Property>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -41,7 +48,7 @@
                   <Component id="jbMostrar" alignment="1" max="32767" attributes="0"/>
                   <Component id="jbGenerar" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="193" max="32767" attributes="0"/>
+              <EmptySpace pref="199" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" pref="119" max="-2" attributes="0"/>
@@ -120,7 +127,7 @@
               <Component id="jScrollPane1" min="-2" pref="267" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jbSalir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

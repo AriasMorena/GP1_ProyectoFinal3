@@ -27,6 +27,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
         cargarCombosS();
         jcbPeliculas.setSelectedIndex(-1);
         jcbSalas.setSelectedIndex(-1);
+        this.setLocation(180, 0);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -63,6 +64,8 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
         jbInhabilitar = new javax.swing.JButton();
         jrNoApto = new javax.swing.JRadioButton();
         jrNoSubti = new javax.swing.JRadioButton();
+
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -121,7 +124,6 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
         jsHoraInicio.setModel(new javax.swing.SpinnerDateModel());
         jsHoraInicio.setToolTipText("");
         jsHoraInicio.setEditor(new javax.swing.JSpinner.DateEditor(jsHoraInicio, " HH:mm"));
-        jsHoraInicio.setOpaque(true);
 
         jsHoraFin.setModel(new javax.swing.SpinnerDateModel());
         jsHoraFin.setEditor(new javax.swing.JSpinner.DateEditor(jsHoraFin, "HH:mm"));
@@ -218,7 +220,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
+                .addContainerGap(180, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,7 +331,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbSalir)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();

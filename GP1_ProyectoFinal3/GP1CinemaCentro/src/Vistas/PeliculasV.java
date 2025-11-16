@@ -28,6 +28,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
     public PeliculasV() {
         initComponents();
         cabecera();
+        this.setLocation(250, 10);
     }
 
     /**
@@ -64,7 +65,8 @@ public class PeliculasV extends javax.swing.JInternalFrame {
         jbSalir = new javax.swing.JButton();
         jbAlta = new javax.swing.JButton();
         jbBaja = new javax.swing.JButton();
-        jdcEstreno = new com.toedter.calendar.JDateChooser();
+
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jtPeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,7 +190,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                                 .addComponent(jtEliminar)
                                 .addGap(50, 50, 50)
                                 .addComponent(jbAlta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                                 .addComponent(jbBaja))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,8 +218,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtOrigen, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                                    .addComponent(jtGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                                    .addComponent(jdcEstreno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jtGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))))
                         .addGap(30, 30, 30)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -262,9 +263,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jdcEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel7)))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,7 +276,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
                     .addComponent(jtEliminar)
                     .addComponent(jbAlta)
                     .addComponent(jbBaja))
-                .addGap(18, 29, Short.MAX_VALUE)
+                .addGap(18, 34, Short.MAX_VALUE)
                 .addComponent(jtMostrar)
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -421,7 +420,6 @@ public class PeliculasV extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbBaja;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbSalir;
-    private com.toedter.calendar.JDateChooser jdcEstreno;
     private javax.swing.JTextField jtActores;
     private javax.swing.JButton jtBuscar;
     private javax.swing.JTextField jtDirector;
