@@ -121,6 +121,7 @@ public class ProyeccionData {
         ArrayList<Proyeccion>Proyecciones = new ArrayList<>();
         
         String sql = "SELECT p.id_proyeccion AS idProyeccion , "
+                + "p. id_sala , "
                 + "s.NroSala , "
                 + "pe.titulo , "
                 + "p.idioma , "
@@ -144,6 +145,7 @@ public class ProyeccionData {
              peli.setTitulo(rs.getString("titulo"));
              
              Sala sala = new Sala();
+             sala.setNroSala(rs.getInt("id_sala"));
              sala.setNroSala(rs.getInt("nroSala"));
              
              Proyeccion proy = new Proyeccion ();
