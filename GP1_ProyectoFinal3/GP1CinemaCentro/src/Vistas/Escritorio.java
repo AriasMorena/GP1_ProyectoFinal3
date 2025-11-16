@@ -30,51 +30,39 @@ public class Escritorio extends javax.swing.JFrame {
     private void initComponents() {
 
         jdEscritorio = new javax.swing.JDesktopPane();
-        Fondo = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuBar2 = new javax.swing.JMenuBar();
         jmPelicula = new javax.swing.JMenu();
         jmiPelicula = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jmiSalas = new javax.swing.JMenuItem();
-        jmAsientos = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        jmSalas = new javax.swing.JMenu();
+        jmiSala = new javax.swing.JMenuItem();
+        jmiAsiento = new javax.swing.JMenuItem();
+        jmProyeccion = new javax.swing.JMenu();
+        jmiProyecciones = new javax.swing.JMenuItem();
+        jmComprador = new javax.swing.JMenu();
+        jmiUsuario = new javax.swing.JMenuItem();
+        jmSalir = new javax.swing.JMenu();
         jmiSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jdEscritorio.setBackground(new java.awt.Color(153, 153, 255));
-        jdEscritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Fondo.setBackground(new java.awt.Color(153, 153, 255));
-
-        javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
-        Fondo.setLayout(FondoLayout);
-        FondoLayout.setHorizontalGroup(
-            FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 2140, Short.MAX_VALUE)
+        javax.swing.GroupLayout jdEscritorioLayout = new javax.swing.GroupLayout(jdEscritorio);
+        jdEscritorio.setLayout(jdEscritorioLayout);
+        jdEscritorioLayout.setHorizontalGroup(
+            jdEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 2000, Short.MAX_VALUE)
         );
-        FondoLayout.setVerticalGroup(
-            FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1770, Short.MAX_VALUE)
+        jdEscritorioLayout.setVerticalGroup(
+            jdEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
 
-        jdEscritorio.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2000, 800));
+        jMenuBar2.setBackground(new java.awt.Color(153, 153, 255));
+        jMenuBar2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jMenuBar2.setForeground(new java.awt.Color(153, 153, 255));
 
-        getContentPane().add(jdEscritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2000, 900));
-
-        jMenuBar1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 255), 1, true));
-        jMenuBar1.setAlignmentY(0.47368422F);
-        jMenuBar1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        jMenuBar1.setName(""); // NOI18N
-
-        jmPelicula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jmPelicula.setText("Peliculas");
-        jmPelicula.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         jmiPelicula.setText("Pelicula");
         jmiPelicula.addActionListener(new java.awt.event.ActionListener() {
@@ -84,62 +72,63 @@ public class Escritorio extends javax.swing.JFrame {
         });
         jmPelicula.add(jmiPelicula);
 
-        jMenuBar1.add(jmPelicula);
+        jMenuBar2.add(jmPelicula);
 
-        jMenu2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jMenu2.setText("Salas");
-        jMenu2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        jmiSalas.setText("Salas");
-        jmiSalas.addActionListener(new java.awt.event.ActionListener() {
+        jmSalas.setText("Salas");
+        jmSalas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiSalasActionPerformed(evt);
+                jmSalasActionPerformed(evt);
             }
         });
-        jMenu2.add(jmiSalas);
 
-        jmAsientos.setText("Asientos");
-        jmAsientos.addActionListener(new java.awt.event.ActionListener() {
+        jmiSala.setText("Sala");
+        jmiSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmAsientosActionPerformed(evt);
+                jmiSalaActionPerformed(evt);
             }
         });
-        jMenu2.add(jmAsientos);
+        jmSalas.add(jmiSala);
 
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jMenu3.setText("Proyeccion");
-        jMenu3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        jMenuItem1.setText("Proyecciones");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmiAsiento.setText("Asiento");
+        jmiAsiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmiAsientoActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
+        jmSalas.add(jmiAsiento);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar2.add(jmSalas);
 
-        jMenu4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jMenu4.setText("Comprador");
-        jMenu4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenu4.setIconTextGap(8);
+        jmProyeccion.setText("Proyeccion");
 
-        jMenuItem2.setText("Usuario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jmiProyecciones.setText("Proyecciones");
+        jmiProyecciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jmiProyeccionesActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem2);
+        jmProyeccion.add(jmiProyecciones);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar2.add(jmProyeccion);
 
-        jMenu5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jMenu5.setText("Salir");
-        jMenu5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jmComprador.setText("Comprador");
+
+        jmiUsuario.setText("Usuario");
+        jmiUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiUsuarioActionPerformed(evt);
+            }
+        });
+        jmComprador.add(jmiUsuario);
+
+        jMenuBar2.add(jmComprador);
+
+        jmSalir.setText("Salir");
+        jmSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmSalirActionPerformed(evt);
+            }
+        });
 
         jmiSalir.setText("Salir");
         jmiSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -147,19 +136,44 @@ public class Escritorio extends javax.swing.JFrame {
                 jmiSalirActionPerformed(evt);
             }
         });
-        jMenu5.add(jmiSalir);
+        jmSalir.add(jmiSalir);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar2.add(jmSalir);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar2);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jdEscritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jdEscritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jmiUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUsuarioActionPerformed
+        // TODO add your handling code here:
+        jdEscritorio.removeAll();
+        jdEscritorio.repaint();
+        CompradorV vistaC = new CompradorV ();
+        vistaC.setVisible(true);
+        jdEscritorio.add(vistaC);
+        jdEscritorio.moveToFront(vistaC);
+    }//GEN-LAST:event_jmiUsuarioActionPerformed
+
+    private void jmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSalirActionPerformed
+        // TODO add your handling code here: uups este no era lol
+    }//GEN-LAST:event_jmSalirActionPerformed
+
     private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
         // TODO add your handling code here:
-         int opcion; 
+                   int opcion; 
         
         opcion = JOptionPane.showConfirmDialog(this, "¿Desea Salir del programa?",
         "Confirmar salida", JOptionPane.YES_NO_OPTION);
@@ -170,28 +184,7 @@ public class Escritorio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiSalirActionPerformed
 
-    private void jmiSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalasActionPerformed
-        // TODO add your handling code here:    
-        jdEscritorio.removeAll();
-        jdEscritorio.repaint();
-        SalasV vistaS = new SalasV ();
-        vistaS.setVisible(true);
-        jdEscritorio.add(vistaS);
-        jdEscritorio.moveToFront(vistaS);
-    }//GEN-LAST:event_jmiSalasActionPerformed
-
-    private void jmAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAsientosActionPerformed
-        // TODO add your handling code here:
-        jdEscritorio.removeAll();
-        jdEscritorio.repaint();
-        AsientosV vistaA = new AsientosV ();
-        vistaA.setVisible(true);
-        jdEscritorio.add(vistaA);
-        jdEscritorio.moveToFront(vistaA);
-
-    }//GEN-LAST:event_jmAsientosActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmiProyeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiProyeccionesActionPerformed
         // TODO add your handling code here:
         jdEscritorio.removeAll();
         jdEscritorio.repaint();
@@ -199,17 +192,11 @@ public class Escritorio extends javax.swing.JFrame {
         vistaP.setVisible(true);
         jdEscritorio.add(vistaP);
         jdEscritorio.moveToFront(vistaP);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiProyeccionesActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        jdEscritorio.removeAll();
-        jdEscritorio.repaint();
-        CompradorV vistaC = new CompradorV ();
-        vistaC.setVisible(true);
-        jdEscritorio.add(vistaC);
-        jdEscritorio.moveToFront(vistaC);        
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void jmSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSalasActionPerformed
+        // TODO add your handling code here: ooh este tampoco
+    }//GEN-LAST:event_jmSalasActionPerformed
 
     private void jmiPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPeliculaActionPerformed
         // TODO add your handling code here:
@@ -220,6 +207,26 @@ public class Escritorio extends javax.swing.JFrame {
         jdEscritorio.add(vistaP);
         jdEscritorio.moveToFront(vistaP);
     }//GEN-LAST:event_jmiPeliculaActionPerformed
+
+    private void jmiSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalaActionPerformed
+        // TODO add your handling code here:
+        jdEscritorio.removeAll();
+        jdEscritorio.repaint();
+        SalasV vistaS = new SalasV ();
+        vistaS.setVisible(true);
+        jdEscritorio.add(vistaS);
+        jdEscritorio.moveToFront(vistaS);
+    }//GEN-LAST:event_jmiSalaActionPerformed
+
+    private void jmiAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAsientoActionPerformed
+        // TODO add your handling code here:
+        jdEscritorio.removeAll();
+        jdEscritorio.repaint();
+        AsientosV vistaA = new AsientosV ();
+        vistaA.setVisible(true);
+        jdEscritorio.add(vistaA);
+        jdEscritorio.moveToFront(vistaA);
+    }//GEN-LAST:event_jmiAsientoActionPerformed
   
     /**
      * @param args the command line arguments
@@ -257,19 +264,18 @@ public class Escritorio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Fondo;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JDesktopPane jdEscritorio;
-    private javax.swing.JMenuItem jmAsientos;
+    private javax.swing.JMenu jmComprador;
     private javax.swing.JMenu jmPelicula;
+    private javax.swing.JMenu jmProyeccion;
+    private javax.swing.JMenu jmSalas;
+    private javax.swing.JMenu jmSalir;
+    private javax.swing.JMenuItem jmiAsiento;
     private javax.swing.JMenuItem jmiPelicula;
-    private javax.swing.JMenuItem jmiSalas;
+    private javax.swing.JMenuItem jmiProyecciones;
+    private javax.swing.JMenuItem jmiSala;
     private javax.swing.JMenuItem jmiSalir;
+    private javax.swing.JMenuItem jmiUsuario;
     // End of variables declaration//GEN-END:variables
 }
