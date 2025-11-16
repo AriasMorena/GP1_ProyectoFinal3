@@ -8,8 +8,6 @@ import Persistencia.*;
 import javax.swing.table.DefaultTableModel;
 import Entidades.*;
 import java.util.List;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,9 +25,6 @@ public class SalasV extends javax.swing.JInternalFrame {
      */
     public SalasV() {
         initComponents();
-      /*  Escritorio.jdEscritorio.add(this);
-        this.setSize(400, 500);
-        centrarInternal(this, Escritorio.jdEscritorio);*/
         cabecera();
         jtId.setEditable(false);
         this.setLocation(350, 20);
@@ -619,10 +614,4 @@ public class SalasV extends javax.swing.JInternalFrame {
         jrbInhabilitado.setSelected(false);
     }
      
-    /* private void centrarInternal(JInternalFrame internal, JDesktopPane escritorio){
-     
-        int x = (escritorio.getWidth() - internal.getWidth())/2;
-        int y = (escritorio.getHeight() - internal.getHeight())/2;
-        internal.setLocation(x, y);
-     }*/
 }

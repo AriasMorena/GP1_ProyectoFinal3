@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Persistencia/ProyeccionData.java</file>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Entidades/Proyeccion.java</file>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/AsientosV.java</file>
+            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/PeliculasV.java</file>
             <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/ProyeccionesV.java</file>
             <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/TicketV.java</file>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/SalasV.java</file>
             <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/CompradorV.java</file>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/PeliculasV.java</file>
-            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Entidades/CompraTicket.java</file>
+            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/Escritorio.java</file>
+            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/AsientosV.java</file>
+            <file>file:/C:/Users/arias/GP1_ProyectoFinal3/GP1_ProyectoFinal3/GP1CinemaCentro/src/Vistas/SalasV.java</file>
         </group>
     </open-files>
 </project-private>

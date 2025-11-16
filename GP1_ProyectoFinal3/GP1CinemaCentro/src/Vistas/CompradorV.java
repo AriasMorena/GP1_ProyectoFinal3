@@ -609,15 +609,6 @@ public class CompradorV extends javax.swing.JInternalFrame {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private void mostrarC(){
         
         modelo.setRowCount(0);

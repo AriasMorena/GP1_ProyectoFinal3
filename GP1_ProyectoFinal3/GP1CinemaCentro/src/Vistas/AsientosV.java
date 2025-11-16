@@ -33,13 +33,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
         cargarCombosS();
         limpiar();
         configurarColores ();
-        this.setLocation(300, 10);
-        /*
-        jcbProyeccion.setSelectedIndex(-1);
-        jcbSalas.setSelectedIndex(-1);
-        jcbFilas.setSelectedIndex(-1);
-        jcbNumero.setSelectedIndex(-1);
-        */
+        this.setLocation(330, 10);
     }
 
     /**

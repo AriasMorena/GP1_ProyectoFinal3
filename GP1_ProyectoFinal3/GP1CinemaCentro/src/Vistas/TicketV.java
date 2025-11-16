@@ -22,6 +22,7 @@ public class TicketV extends javax.swing.JInternalFrame {
      */
     public TicketV() {
         initComponents();
+        this.setLocation(250, 0);
     }
 
     /**
@@ -53,6 +54,8 @@ public class TicketV extends javax.swing.JInternalFrame {
         jbMostrar = new javax.swing.JButton();
         jbBuscarP = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Comprar Ticket");
@@ -143,7 +146,7 @@ public class TicketV extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jbBuscarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jbEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                        .addGap(0, 69, Short.MAX_VALUE))
+                        .addGap(0, 75, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -186,7 +189,7 @@ public class TicketV extends javax.swing.JInternalFrame {
                     .addComponent(jbBuscarD)
                     .addComponent(jbMostrar)
                     .addComponent(jbBuscarP))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jButton7)
