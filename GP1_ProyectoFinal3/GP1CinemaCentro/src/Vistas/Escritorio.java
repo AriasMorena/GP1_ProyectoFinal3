@@ -40,6 +40,7 @@ public class Escritorio extends javax.swing.JFrame {
         jmiProyecciones = new javax.swing.JMenuItem();
         jmComprador = new javax.swing.JMenu();
         jmiUsuario = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
         jmiSalir = new javax.swing.JMenuItem();
 
@@ -120,6 +121,14 @@ public class Escritorio extends javax.swing.JFrame {
             }
         });
         jmComprador.add(jmiUsuario);
+
+        jMenuItem1.setText("Comprar Ticket");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jmComprador.add(jMenuItem1);
 
         jMenuBar2.add(jmComprador);
 
@@ -227,6 +236,16 @@ public class Escritorio extends javax.swing.JFrame {
         jdEscritorio.add(vistaA);
         jdEscritorio.moveToFront(vistaA);
     }//GEN-LAST:event_jmiAsientoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        jdEscritorio.removeAll();
+        jdEscritorio.repaint();
+        TicketV vistaT = new TicketV ();
+        vistaT.setVisible(true);
+        jdEscritorio.add(vistaT);
+        jdEscritorio.moveToFront(vistaT);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
   
     /**
      * @param args the command line arguments
@@ -265,6 +284,7 @@ public class Escritorio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JDesktopPane jdEscritorio;
     private javax.swing.JMenu jmComprador;
     private javax.swing.JMenu jmPelicula;

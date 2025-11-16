@@ -145,7 +145,7 @@ public class ProyeccionData {
              peli.setTitulo(rs.getString("titulo"));
              
              Sala sala = new Sala();
-             sala.setNroSala(rs.getInt("id_sala"));
+             sala.setIdSala(rs.getInt("id_sala"));
              sala.setNroSala(rs.getInt("nroSala"));
              
              Proyeccion proy = new Proyeccion ();
