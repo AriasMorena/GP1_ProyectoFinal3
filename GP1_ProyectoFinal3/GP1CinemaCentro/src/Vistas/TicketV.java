@@ -6,9 +6,8 @@ package Vistas;
 
 import Entidades.*;
 import Persistencia.*;
-import Persistencia.ProyeccionData;
-import Persistencia.SalaData;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,11 +16,17 @@ import java.util.List;
 public class TicketV extends javax.swing.JInternalFrame {
 
     AsientoData asientoD = new AsientoData();
+    CompradorData compD = new CompradorData();
+    TicketData tickD = new TicketData();
+    ProyeccionData proyD = new ProyeccionData();
     /**
      * Creates new form Ticket
      */
     public TicketV() {
         initComponents();
+        cargarComboP();
+        cargarComboC();
+        limpiar();
     }
 
     /**
@@ -84,6 +89,12 @@ public class TicketV extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Numero:");
+
+        jcbProyeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProyeccionActionPerformed(evt);
+            }
+        });
 
         jbComprar.setText("Comprar Ticket");
 
@@ -196,6 +207,21 @@ public class TicketV extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcbProyeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProyeccionActionPerformed
+        // TODO add your handling code here:
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (proy == null) {
+            
+            return;
+        } else {
+        
+            jtSala.setText("SALA: " + proy.getSala().getNroSala());
+        
+            cargarFilas();
+        }
+    }//GEN-LAST:event_jcbProyeccionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton7;
@@ -250,7 +276,6 @@ public class TicketV extends javax.swing.JInternalFrame {
     private void cargarComboP(){
         
         jcbProyeccion.removeAll();
-        ProyeccionData proyD = new ProyeccionData();
         
         for (Proyeccion p: proyD.listarProyecciones()) {
             
@@ -259,6 +284,17 @@ public class TicketV extends javax.swing.JInternalFrame {
                 jcbProyeccion.addItem(p);
             }
         }
+    }
+    
+    private void cargarComboC(){
+        
+        jcbComprador.removeAll();
+        
+        for (Comprador c: compD.listarCompradores()) {
+            
+            jcbComprador.addItem(c);
+        }
+        
     }
     
     private void cargarFilas(){
@@ -277,9 +313,25 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         List <String> filas = asientoD.obtenerFilas(idSala);
         
-        for (int i = 0; i < 10; i++) {
+        /*if (filas.isEmpty()) {
             
+            JOptionPane.showMessageDialog(this, "La proyeccion seleccionada no tiene asientos cargados.");
+            return;
         }
+        */
+        for (String f: filas) {
+            
+            jcbFila.addItem(f);
+        }
+    }
+    
+    private void limpiar(){
+        
+        jcbComprador.setSelectedIndex(-1);
+        jcbProyeccion.setSelectedIndex(-1);
+        jcbFila.setSelectedIndex(-1);
+        jcbNumero.setSelectedIndex(-1);
+        jtSala.setText("");
     }
     
     
