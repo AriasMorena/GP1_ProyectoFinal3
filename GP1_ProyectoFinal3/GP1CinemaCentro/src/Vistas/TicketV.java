@@ -428,38 +428,40 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         int idSala = proyS.getSala().getIdSala();
     
-        LocalDate fechaC = LocalDate.now();
-       
-        LocalDate fechaF = fechaC.plusDays(3);
-                   
         Asiento asiento = asientoD.buscarAsiento(idSala, fila, numero);
         
-        double precio = proyS.getPrecioLugar();
-
-        if (proyS.isEs3D() == true) {
-            
-            precio = precio + 2000;
-            JOptionPane.showMessageDialog(this, "La Pelicula se le suman $2000 mas por ser en 3D");
-        }
-        
-        if (proyS.isSubtitulada()) {
-            
-            precio = precio - 1000;
-            JOptionPane.showMessageDialog(this, "La pelicula recibe un descuento de $1000 por estar Subtitulada");
-        }
-        
-            
-        Ticket ticket = new Ticket(0, fechaF, fechaC, precio, comprS, asiento);
-            
-        tD.generarTicket(ticket);
-        
         if (asiento.isDisponible()) {
+
+
+            LocalDate fechaC = LocalDate.now();
+       
+            LocalDate fechaF = fechaC.plusDays(3);
+                   
+        
+            double precio = proyS.getPrecioLugar();
+
+            if (proyS.isEs3D() == true) {
             
-            asientoD.ocuparAsiento(asiento.getIdAsiento());
-        } else {
+                precio = precio + 2000;
+                JOptionPane.showMessageDialog(this, "La Pelicula se le suman $2000 mas por ser en 3D");
+            }
+        
+            if (proyS.isSubtitulada()) {
             
-            JOptionPane.showMessageDialog(this, "Asiento Ocupado");
-        }
+                precio = precio - 1000;
+                JOptionPane.showMessageDialog(this, "La pelicula recibe un descuento de $1000 por estar Subtitulada");
+            }
+              
+            Ticket ticket = new Ticket(0, fechaF, fechaC, precio, comprS, asiento);
+            
+            tD.generarTicket(ticket);
+        
+            
+                asientoD.ocuparAsiento(asiento.getIdAsiento());
+            } else {
+            
+                JOptionPane.showMessageDialog(this, "Asiento Ocupado");
+            }
         
      }
     
@@ -649,6 +651,8 @@ public class TicketV extends javax.swing.JInternalFrame {
         modelo.addColumn("Monto");
         modelo.addColumn("Pelicula");
         modelo.addColumn("Fecha Funcion");
+        modelo.addColumn("Fila");
+        modelo.addColumn("Numero");
         
         jtTickets.setModel(modelo);
     }
@@ -665,7 +669,9 @@ public class TicketV extends javax.swing.JInternalFrame {
                 t.getFechaCompra() ,
                 t.getPrecio() , 
                 t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
-                t.getFechaFuncion()
+                t.getFechaFuncion(),
+                t.getAsientoComprado().getFila(),
+                t.getAsientoComprado().getNúmero()
             });
         }
     }

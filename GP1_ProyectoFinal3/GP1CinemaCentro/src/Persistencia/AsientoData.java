@@ -377,6 +377,7 @@ public List<String> obtenerNumeros (String fila, int idSala){
                 s.setNroSala(rs.getInt("nroSala"));
                 
                 Pelicula peli = new Pelicula();
+                peli.setIdPelicula(rs.getInt("id_pelicula"));
                 peli.setTitulo(rs.getString("titulo"));
                 
                 Proyeccion proy = new Proyeccion ();
