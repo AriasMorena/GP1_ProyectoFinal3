@@ -122,7 +122,7 @@ public class Proyeccion {
     @Override
     public String toString() {
         
-        return "Proyeccion: " + pelicula.getTitulo() + " Sala: " + sala.getNroSala();
+        return "Titulo: " + pelicula.getTitulo() + " Sala: " + sala.getNroSala();
     }
     
     

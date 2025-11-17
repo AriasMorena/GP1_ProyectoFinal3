@@ -350,8 +350,12 @@ public List<String> obtenerNumeros (String fila, int idSala){
         
         Asiento asiento = null;
         
-        String sql = "SELECT a.id_lugar , a.numero , a.fila , a.id_sala , a.estado "
-                + "FROM asiento a WHERE a.id_lugar = ? ";
+        String sql = "SELECT a.* , p.* , pe.titulo , s.nroSala "
+                + "FROM asiento a "
+                + "JOIN proyeccion p ON a.id_proyeccion = p.id_proyeccion "
+                + "JOIN sala s ON p.id_sala = s.id_sala "
+                + "JOIN pelicula pe ON p.id_pelicula = pe.id_pelicula "
+                + " WHERE a.id_lugar = ? ";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -363,13 +367,27 @@ public List<String> obtenerNumeros (String fila, int idSala){
                 
                 asiento = new Asiento ();
                 asiento.setIdAsiento(rs.getInt("id_lugar"));
-                asiento.setNúmero(rs.getInt("numero"));
                 asiento.setFila(rs.getString("fila"));
+                asiento.setNúmero(rs.getInt("numero"));
+
                 asiento.setDisponible(rs.getBoolean("estado"));
                 
                 Sala s = new Sala();
                 s.setIdSala(rs.getInt("id_sala"));
-                asiento.setSala(s);
+                s.setNroSala(rs.getInt("nroSala"));
+                
+                Pelicula peli = new Pelicula();
+                peli.setTitulo(rs.getString("titulo"));
+                
+                Proyeccion proy = new Proyeccion ();
+                proy.setIdProyeccion(rs.getInt("id_proyeccion"));
+                proy.setSala(s);
+                proy.setPelicula(peli);
+                proy.setHoraInicio(rs.getTime("horaInicio"));
+                proy.setHoraFin(rs.getTime("horaFin"));
+                proy.setPrecioLugar(rs.getDouble("precio"));
+                
+                asiento.setProy(proy);
             }
             rs.close();
             ps.close();

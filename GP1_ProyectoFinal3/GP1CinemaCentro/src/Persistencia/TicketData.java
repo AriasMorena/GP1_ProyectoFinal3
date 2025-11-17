@@ -14,6 +14,9 @@ import java.sql.PreparedStatement;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,8 +48,7 @@ public class TicketData {
             
             ps.setDate(2, java.sql.Date.valueOf(ticket.getFechaCompra()));
             
-            ps.setTimestamp(3, java.sql.Timestamp.valueOf(ticket.getFechaFuncion()));
-
+            ps.setDate(3, java.sql.Date.valueOf(ticket.getFechaFuncion()));
             ps.setDouble(4, ticket.getPrecio());
             
             ps.setInt(5, ticket.getComprador().getDni());
@@ -77,8 +79,8 @@ public class TicketData {
                 ticket = new Ticket();
                 
                 ticket.setIdTicket(idTicket);
-                ticket.setFechaCompra(rs.getDate("fechaFuncion").toLocalDate());
-                ticket.setFechaFuncion(rs.getTimestamp("fechaFuncion").toLocalDateTime());
+                ticket.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
+                ticket.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
                 ticket.setPrecio(rs.getDouble("precio"));
                 
                 Comprador c = cD.buscarComprador(rs.getInt("dni"));
@@ -145,6 +147,149 @@ public class TicketData {
         
             JOptionPane.showMessageDialog(null, "Error al borrar el ticket." + ex.getMessage());
         }           
+    }
+    
+    public List<Ticket> listarTickets(){
+        
+        List<Ticket> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM ticket_compra";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                
+                Ticket ticket = new Ticket();
+                ticket.setIdTicket(rs.getInt("id_ticket"));
+
+                LocalDate fechaC = rs.getDate("fechaCompra").toLocalDate();
+                ticket.setFechaCompra(fechaC);
+                
+                LocalDate fechaF = rs.getDate("fechaFuncion").toLocalDate();
+                ticket.setFechaFuncion(fechaF);
+                
+                ticket.setPrecio(rs.getDouble("monto"));
+                
+                int idComprador = rs.getInt("dni");
+                Comprador comprador = cD.buscarComprador(idComprador);
+                ticket.setComprador(comprador);
+                
+                int idAsiento = rs.getInt("id_lugar");
+                Asiento asiento = aD.buscarAsientoPorId(idAsiento);
+                ticket.setAsientoComprado(asiento);
+                
+                lista.add(ticket);
+            }
+            
+            ps.close();
+        }catch (SQLException ex){
+                    
+            JOptionPane.showMessageDialog(null, "Error al listar tickets: " + ex.getMessage());
+        }
+        
+        return lista;
+    }
+    
+    public List<Ticket> buscarTicketsXComp(int dni){
+        
+        List<Ticket> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM ticket_compra WHERE dni = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                
+                Ticket ticket = new Ticket();
+                
+                ticket.setIdTicket(rs.getInt("id_ticket"));
+                
+                LocalDate fechaC = rs.getDate("fechaCompra").toLocalDate();
+                ticket.setFechaCompra(fechaC);
+                
+                if (rs.getDate("fechaFuncion") != null) {
+                             
+                    LocalDate fechaF = rs.getDate("fechaFuncion").toLocalDate();
+                    ticket.setFechaFuncion(fechaF);
+                }
+                
+                ticket.setPrecio(rs.getDouble("monto"));
+                
+                int idComprador = rs.getInt("dni");
+                Comprador comprador = cD.buscarComprador(idComprador);
+                ticket.setComprador(comprador);
+                
+                int idAsiento = rs.getInt("id_lugar");
+                Asiento asiento = aD.buscarAsientoPorId(idAsiento);
+                ticket.setAsientoComprado(asiento);
+                
+                lista.add(ticket);
+            }
+            ps.close();
+            
+        }catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al buscar tickets del comprador: " + ex.getMessage());
+        }
+        
+        return lista;
+    }
+    
+    public List<Ticket> buscarTicketsXProy(int idProy){
+        
+        List<Ticket> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM ticket_compra";
+        
+        try{
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idProy);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Ticket ticket = new Ticket();
+                
+                ticket.setIdTicket(rs.getInt("id_ticket"));
+                
+                LocalDate fechaC = rs.getDate("fechaCompra").toLocalDate();
+                ticket.setFechaCompra(fechaC);
+                
+                if (rs.getDate("fechaFuncion") != null) {
+                             
+                    LocalDate fechaF = rs.getDate("fechaFuncion").toLocalDate();
+                    ticket.setFechaFuncion(fechaF);
+                }
+                
+                ticket.setPrecio(rs.getDouble("monto"));
+                
+                int idComprador = rs.getInt("dni");
+                Comprador comprador = cD.buscarComprador(idComprador);
+                ticket.setComprador(comprador);
+                
+                int idAsiento = rs.getInt("id_lugar");
+                Asiento asiento = aD.buscarAsientoPorId(idAsiento);
+                ticket.setAsientoComprado(asiento);
+                
+                if (asiento.getProy() != null && asiento.getProy().getIdProyeccion() == idProy) {
+                    
+                    lista.add(ticket);
+                } 
+            }
+            
+            ps.close();
+                      
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al buscar Tickets por Proyeccion. " + ex.getMessage() );
+        }
+        return lista;
     }
     
 }

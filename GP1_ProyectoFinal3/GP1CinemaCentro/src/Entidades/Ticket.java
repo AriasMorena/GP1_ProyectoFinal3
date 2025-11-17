@@ -12,14 +12,13 @@ public class Ticket {
     
     private int idTicket;
     private LocalDate fechaCompra;
-    private LocalDateTime fechaFuncion;
+    private LocalDate fechaFuncion;
     private double precio;
     
     private Comprador comprador;
     private Asiento asientoComprado;
 
-    public Ticket(int idTicket, LocalDate fechaCompra, LocalDateTime fechaFuncion, double precio, Comprador comprador, Asiento asientoComprado) {
-        
+    public Ticket(int idTicket, LocalDate fechaCompra, LocalDate fechaFuncion, double precio, Comprador comprador, Asiento asientoComprado) {
         this.idTicket = idTicket;
         this.fechaCompra = fechaCompra;
         this.fechaFuncion = fechaFuncion;
@@ -27,6 +26,8 @@ public class Ticket {
         this.comprador = comprador;
         this.asientoComprado = asientoComprado;
     }
+
+    
     
     public Ticket() {
     }
@@ -47,11 +48,11 @@ public class Ticket {
         this.fechaCompra = fechaCompra;
     }
 
-    public LocalDateTime getFechaFuncion() {
+    public LocalDate getFechaFuncion() {
         return fechaFuncion;
     }
 
-    public void setFechaFuncion(LocalDateTime fechaFuncion) {
+    public void setFechaFuncion(LocalDate fechaFuncion) {
         this.fechaFuncion = fechaFuncion;
     }
 

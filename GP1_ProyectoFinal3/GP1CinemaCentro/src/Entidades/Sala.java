@@ -69,7 +69,7 @@ public class Sala {
     public String toString() {
         
         
-        return idSala + " Numero de Sala: " + nroSala ;
+        return  "Numero de Sala: " + nroSala+ " Id: " + idSala ;
     }
     
         

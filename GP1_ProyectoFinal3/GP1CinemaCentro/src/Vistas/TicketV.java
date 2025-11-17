@@ -6,8 +6,10 @@ package Vistas;
 
 import Entidades.*;
 import Persistencia.*;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,9 +17,11 @@ import javax.swing.JOptionPane;
  */
 public class TicketV extends javax.swing.JInternalFrame {
 
+    private DefaultTableModel modelo = new DefaultTableModel();
+    
     AsientoData asientoD = new AsientoData();
     CompradorData compD = new CompradorData();
-    TicketData tickD = new TicketData();
+    TicketData tD = new TicketData();
     ProyeccionData proyD = new ProyeccionData();
     /**
      * Creates new form Ticket
@@ -28,6 +32,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         cargarComboP();
         cargarComboC();
         limpiar();
+        cabecera();
 
         this.setLocation(250, 0);
     }
@@ -60,7 +65,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         jbBuscarD = new javax.swing.JButton();
         jbMostrar = new javax.swing.JButton();
         jbBuscarP = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jbSalir = new javax.swing.JButton();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -101,19 +106,50 @@ public class TicketV extends javax.swing.JInternalFrame {
             }
         });
 
+        jcbFila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbFilaActionPerformed(evt);
+            }
+        });
+
         jbComprar.setText("Comprar Ticket");
+        jbComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbComprarActionPerformed(evt);
+            }
+        });
 
         jbModificar.setText("Modificar");
 
         jbEliminar.setText("Elimiar Ticket");
 
         jbBuscarD.setText("Buscar Por DNI");
+        jbBuscarD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarDActionPerformed(evt);
+            }
+        });
 
         jbMostrar.setText("Mostar Todos");
+        jbMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMostrarActionPerformed(evt);
+            }
+        });
 
         jbBuscarP.setText("Buscar Por Proy");
+        jbBuscarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarPActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Salir");
+        jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,7 +202,7 @@ public class TicketV extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74))
             .addGroup(layout.createSequentialGroup()
                 .addGap(334, 334, 334)
@@ -205,7 +241,7 @@ public class TicketV extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jButton7)
+                .addComponent(jbSalir)
                 .addGap(51, 51, 51))
         );
 
@@ -216,20 +252,91 @@ public class TicketV extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         
-        if (proy == null) {
+        if (proy != null) {
             
-            return;
-        } else {
-        
             jtSala.setText("SALA: " + proy.getSala().getNroSala());
         
             cargarFilas();
-        }
+        } 
     }//GEN-LAST:event_jcbProyeccionActionPerformed
+
+    private void jcbFilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFilaActionPerformed
+        // TODO add your handling code here:
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        String fila = (String) jcbFila.getSelectedItem();
+        
+        if (proy == null || fila == null) {
+            
+            return;
+        } else {
+            
+            cargarNumero(fila);
+        }
+    }//GEN-LAST:event_jcbFilaActionPerformed
+
+    private void jbComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbComprarActionPerformed
+        // TODO add your handling code here:
+        
+       Proyeccion proyS= (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+       Comprador comprS = (Comprador) jcbComprador.getSelectedItem();
+        
+       String fila = (String) jcbFila.getSelectedItem();
+       String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
+        
+        if (proyS == null || comprS == null || fila.isEmpty() || numeroStr.isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Se debe Seleccionar todo los campos.");
+        } else{
+         comprarTicket();
+         limpiar();
+        }
+    }//GEN-LAST:event_jbComprarActionPerformed
+
+    private void jbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMostrarActionPerformed
+        // TODO add your handling code here:
+        cargarTabla();
+    }//GEN-LAST:event_jbMostrarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbBuscarDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarDActionPerformed
+        // TODO add your handling code here:
+        
+        Comprador comp = (Comprador) jcbComprador.getSelectedItem();
+        
+        if (comp == null) {
+            
+            JOptionPane.showMessageDialog(this, "Eliga un usuario para buscar sus tickets");
+        } else {
+            
+            mostraTicketXDni();
+            limpiar ();
+        }
+        
+    }//GEN-LAST:event_jbBuscarDActionPerformed
+
+    private void jbBuscarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPActionPerformed
+        // TODO add your handling code here:
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (proy == null) {
+            
+            JOptionPane.showMessageDialog(this, "Eliga un usuario para buscar sus tickets");
+        } else {
+            
+            mostrarTicketXProy();
+            limpiar ();
+        }
+    }//GEN-LAST:event_jbBuscarPActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -243,6 +350,7 @@ public class TicketV extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbMostrar;
+    private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<Object> jcbComprador;
     private javax.swing.JComboBox<String> jcbFila;
     private javax.swing.JComboBox<String> jcbNumero;
@@ -251,6 +359,101 @@ public class TicketV extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtTickets;
     // End of variables declaration//GEN-END:variables
 
+    private void comprarTicket(){
+        
+       Proyeccion proyS= (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+       Comprador comprS = (Comprador) jcbComprador.getSelectedItem();
+        
+       String fila = (String) jcbFila.getSelectedItem();
+       String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
+       
+        int numero = Integer.parseInt(numeroStr);
+        
+        int idSala = proyS.getSala().getIdSala();
+    
+        LocalDate fechaC = LocalDate.now();
+       
+        LocalDate fechaF = fechaC.plusDays(3);
+                   
+        Asiento asiento = asientoD.buscarAsiento(idSala, fila, numero);
+        
+        double precio = proyS.getPrecioLugar();
+
+        if (proyS.isEs3D() == true) {
+            
+            precio = precio + 2000;
+            JOptionPane.showMessageDialog(this, "La Pelicula se le suman $2000 mas por ser en 3D");
+        }
+        
+        if (proyS.isSubtitulada()) {
+            
+            precio = precio - 1000;
+            JOptionPane.showMessageDialog(this, "La pelicula recibe un descuento de $1000 por estar Subtitulada");
+        }
+        
+            
+        Ticket ticket = new Ticket(0, fechaF, fechaC, precio, comprS, asiento);
+            
+        tD.generarTicket(ticket);
+        
+        if (asiento.isDisponible()) {
+            
+            asientoD.ocuparAsiento(asiento.getIdAsiento());
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Asiento Ocupado");
+        }
+        
+     }
+    
+    public void modificarTicket(){
+        
+    }
+    
+    public void mostraTicketXDni(){
+        
+        modelo.setRowCount(0);
+        
+        Comprador comprS = (Comprador) jcbComprador.getSelectedItem();
+        
+        int dni = comprS.getDni();
+        
+        List<Ticket> tickets = tD.buscarTicketsXComp(dni);
+        
+        for (Ticket t: tickets) {
+            
+            modelo.addRow(new Object []{
+                
+                t.getIdTicket() , 
+                t.getComprador().getNombre() , 
+                t.getFechaCompra() ,
+                t.getPrecio() , 
+                t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
+                t.getFechaFuncion()
+            });
+        }
+    }
+    
+    public void mostrarTicketXProy(){
+        modelo.setRowCount(0);
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        int idProy = proy.getIdProyeccion();
+        
+        for (Ticket t : tD.buscarTicketsXProy(idProy)) {
+            modelo.addRow(new Object []{
+                
+                t.getIdTicket() , 
+                t.getComprador().getNombre() , 
+                t.getFechaCompra() ,
+                t.getPrecio() , 
+                t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
+                t.getFechaFuncion()
+            });
+        }
+    }
     
     
     
@@ -284,7 +487,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         for (Proyeccion p: proyD.listarProyecciones()) {
             
-            if (!p.isEstado() == false) {
+            if (!p.isEstado() == false ) {
                 
                 jcbProyeccion.addItem(p);
             }
@@ -318,15 +521,24 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         List <String> filas = asientoD.obtenerFilas(idSala);
         
-        /*if (filas.isEmpty()) {
-            
-            JOptionPane.showMessageDialog(this, "La proyeccion seleccionada no tiene asientos cargados.");
-            return;
-        }
-        */
         for (String f: filas) {
             
             jcbFila.addItem(f);
+        }
+    }
+    
+    private void cargarNumero(String fila){
+        
+        jcbNumero.removeAllItems();
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        int idSala = proy.getSala().getIdSala();
+        
+        List<String> numeros = asientoD.obtenerNumeros(fila, idSala);
+        
+        for (String num : numeros) {
+            
+            jcbNumero.addItem(num);
         }
     }
     
@@ -339,8 +551,34 @@ public class TicketV extends javax.swing.JInternalFrame {
         jtSala.setText("");
     }
     
+    private void cabecera(){
+        
+        modelo.addColumn("Codigo Ticket");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Fecha de Compra");
+        modelo.addColumn("Monto");
+        modelo.addColumn("Pelicula");
+        modelo.addColumn("Fecha Funcion");
+        
+        jtTickets.setModel(modelo);
+    }
     
-    
+    private void cargarTabla(){
+        
+        modelo.setRowCount(0);
+        
+        for (Ticket t: tD.listarTickets()) {
+            
+            modelo.addRow(new Object []{
+                t.getIdTicket() ,
+                t.getComprador().getNombre() , 
+                t.getFechaCompra() ,
+                t.getPrecio() , 
+                t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
+                t.getFechaFuncion()
+            });
+        }
+    }
    
 
     
