@@ -6,12 +6,13 @@ package Persistencia;
 
 import Entidades.Asiento;
 import Entidades.Comprador;
+import Entidades.Proyeccion;
+import Entidades.Sala;
 import Entidades.Ticket;
 import java.sql.Connection;
 import Entidades.conexion;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -36,6 +37,14 @@ public class TicketData {
     }
     
     public void generarTicket (Ticket ticket) {
+        
+        int idAsiento = ticket.getAsientoComprado().getIdAsiento();
+        
+        if (!aD.asientoDisponible(idAsiento)) {
+            
+            JOptionPane.showMessageDialog(null, "El asiento seleccionado ya esta ocupado.");
+            return;
+        }
         
         String sql = "INSERT INTO ticket_compra ( id_lugar , fechaFuncion , fechaCompra , monto , dni) " + "VALUES(?,?,?,?,?)";
 
@@ -66,7 +75,7 @@ public class TicketData {
     
         Ticket ticket = null;
         
-        String sql = "SELECT * FROM detalle_ticket WHERE id_ticket = ?";
+        String sql = "SELECT * FROM ticket_compra WHERE id_ticket = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -81,13 +90,13 @@ public class TicketData {
                 ticket.setIdTicket(idTicket);
                 ticket.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
                 ticket.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
-                ticket.setPrecio(rs.getDouble("precio"));
+                ticket.setPrecio(rs.getDouble("monto"));
                 
                 Comprador c = cD.buscarComprador(rs.getInt("dni"));
                 
                 ticket.setComprador(c);
                 
-                Asiento a = aD.buscarAsientoPorId(rs.getInt("id_asiento"));
+                Asiento a = aD.buscarAsientoPorId(rs.getInt("id_lugar"));
                 
                 ticket.setAsientoComprado(a);
             }
@@ -100,24 +109,49 @@ public class TicketData {
         return ticket;
     }
     
-    public void actualizarTicket (int idTicket){
+    public void modificarFYN (int idTicket, String nuevaFila , Integer nuevoNumero){
     
-        String sql = "UPDATE detalle_ticket SET id_ticket = ?, id_proyeccion = ?, cantidad = ?, subtotal = ?, total = ? WHERE codD = ?";
+        Ticket ticket = buscarTicket(idTicket);
+        
+        if (ticket == null) {
+            
+            JOptionPane.showMessageDialog(null , "No existe ese ticket");
+            return;
+        }
+        
+        Asiento asientoActual = ticket.getAsientoComprado();
+        
+        Proyeccion proy = asientoActual.getProy();
+        Sala sala = proy.getSala();
+        int idSala = sala.getIdSala();
+        
+        Asiento asientoNuevo = aD.buscarAsiento(idSala, nuevaFila, nuevoNumero);
+        
+        if (asientoNuevo == null) {
+            
+            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + nuevoNumero+ " no existe en esta Sala.");
+            return;
+        }
+        
+        if (!asientoNuevo.isDisponible()) {
+            
+            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + nuevoNumero +  " esta Ocupado");
+            return;
+        }
+        
+        aD.liberarAsiento(asientoActual.getIdAsiento());
+        aD.ocuparAsiento(asientoNuevo.getIdAsiento());
+        
+        String sql = "UPDATE ticket_compra SET lugar = ? "
+                + "WHERE id_ticket = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idTicket);
+            ps.setInt(1, asientoNuevo.getIdAsiento());
+            ps.setInt(2, idTicket);
+            ps.executeUpdate();
             
-            int filas = ps.executeUpdate();
-            
-            if (filas > 0){
-            
-                JOptionPane.showMessageDialog(null, "Ticket actualizado exitosamente.");
-            } else {
-            
-                JOptionPane.showMessageDialog(null, "No se encontró un ticket con ese código");
-            }
-            ps.close();
+            JOptionPane.showMessageDialog(null, "Ticket modificado correctamente.");
             
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Error al actualizar el ticket." + ex.getMessage());
@@ -126,6 +160,21 @@ public class TicketData {
     
     public void borrarTicket (int id_ticket){
     
+        Ticket ticket = buscarTicket(id_ticket);
+        
+        if (ticket == null) {
+            
+            JOptionPane.showMessageDialog(null, "No se encontro el ticket");
+            return;
+        }
+        
+        Asiento asiento = ticket.getAsientoComprado();
+        
+        if (asiento != null) {
+            
+            aD.liberarAsiento(asiento.getIdAsiento());
+        }
+        
         String sql = "DELETE FROM ticket_compra WHERE id_ticket = ?";
         
         try {
@@ -134,14 +183,14 @@ public class TicketData {
             
             int exito = ps.executeUpdate();
             
-          if (exito == 1){
+            if (exito > 0 ){
         
-               JOptionPane.showMessageDialog(null, "Ticket borrado exitosamente.");
-           } else {
+                JOptionPane.showMessageDialog(null, "Ticket borrado exitosamente.");
+            } else {
             
-               JOptionPane.showMessageDialog(null, "No se encontró un ticket con ese ID");
-        }
-         ps.close();
+                JOptionPane.showMessageDialog(null, "No se encontró un ticket con ese ID");
+            }
+            ps.close();
         
         }catch (SQLException ex){
         

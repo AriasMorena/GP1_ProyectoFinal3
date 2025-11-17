@@ -398,6 +398,28 @@ public List<String> obtenerNumeros (String fila, int idSala){
         
         return asiento;
     }
+    
+    public boolean asientoDisponible(int idLugar){
+        
+        String sql = "SELECT estado FROM asiento WHERE id_lugar = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idLugar);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                return rs.getBoolean("estado");
+            }
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Erro al verificar asiento: " + ex.getMessage());
+        }
+        
+        return false;
+    }
 
 
 }

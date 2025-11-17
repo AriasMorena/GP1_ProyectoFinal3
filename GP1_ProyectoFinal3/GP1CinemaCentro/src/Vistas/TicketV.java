@@ -17,7 +17,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TicketV extends javax.swing.JInternalFrame {
 
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo = new DefaultTableModel(){
+        @Override
+            public boolean isCellEditable(int row, int column){
+                
+                return false;
+            }
+    };
     
     AsientoData asientoD = new AsientoData();
     CompradorData compD = new CompradorData();
@@ -120,8 +126,18 @@ public class TicketV extends javax.swing.JInternalFrame {
         });
 
         jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setText("Elimiar Ticket");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbBuscarD.setText("Buscar Por DNI");
         jbBuscarD.addActionListener(new java.awt.event.ActionListener() {
@@ -335,6 +351,21 @@ public class TicketV extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbBuscarPActionPerformed
 
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:        
+        
+            borrarTicket();
+            limpiar();
+            cargarTabla();
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+        modificarTicket();
+        
+        cargarTabla();
+    }//GEN-LAST:event_jbModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -408,6 +439,38 @@ public class TicketV extends javax.swing.JInternalFrame {
      }
     
     public void modificarTicket(){
+        
+        int filaTabla = jtTickets.getSelectedRow();
+        
+        if (filaTabla == -1) {
+            
+            JOptionPane.showMessageDialog(this, "Seleccione un ticket");
+            return;
+        }
+        
+        int idTicket = (int) modelo.getValueAt(filaTabla, 0);
+        
+        String nuevaFila = jcbFila.getSelectedItem().toString();
+        int nuevoNumero = Integer.parseInt(jcbNumero.getSelectedItem().toString());
+        
+        tD.modificarFYN(idTicket, nuevaFila, nuevoNumero);
+    }
+    
+    private void borrarTicket(){
+        
+        int filaVista = jtTickets.getSelectedRow();
+        
+        if (filaVista == -1) {
+            
+            JOptionPane.showMessageDialog(this, "Seleccione un ticket.");
+            return;
+        }
+        
+        int filaModelo = jtTickets.convertRowIndexToModel(filaVista);
+        
+        int idTicket = (int) modelo.getValueAt(filaModelo, 0);
+        
+        tD.borrarTicket(idTicket);
         
     }
     
