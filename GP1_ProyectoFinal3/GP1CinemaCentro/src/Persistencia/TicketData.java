@@ -109,7 +109,7 @@ public class TicketData {
         return ticket;
     }
     
-    public void modificarFYN (int idTicket, String nuevaFila , Integer nuevoNumero){
+    public void modificarFYN (int idTicket, String nuevaFila , int nuevoNumero){
     
         Ticket ticket = buscarTicket(idTicket);
         
@@ -120,29 +120,27 @@ public class TicketData {
         }
         
         Asiento asientoActual = ticket.getAsientoComprado();
-        
-        Proyeccion proy = asientoActual.getProy();
-        Sala sala = proy.getSala();
-        int idSala = sala.getIdSala();
+    
+        int idSala = asientoActual.getSala().getIdSala();
         
         Asiento asientoNuevo = aD.buscarAsiento(idSala, nuevaFila, nuevoNumero);
         
         if (asientoNuevo == null) {
             
-            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + nuevoNumero+ " no existe en esta Sala.");
+            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + " " + nuevoNumero+ " no existe en esta Sala.");
             return;
         }
         
         if (!asientoNuevo.isDisponible()) {
             
-            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + nuevoNumero +  " esta Ocupado");
+            JOptionPane.showMessageDialog(null, "El asiento " + nuevaFila + " " + nuevoNumero +  " esta Ocupado");
             return;
         }
         
         aD.liberarAsiento(asientoActual.getIdAsiento());
         aD.ocuparAsiento(asientoNuevo.getIdAsiento());
         
-        String sql = "UPDATE ticket_compra SET lugar = ? "
+        String sql = "UPDATE ticket_compra SET id_lugar = ? "
                 + "WHERE id_ticket = ?";
         
         try {

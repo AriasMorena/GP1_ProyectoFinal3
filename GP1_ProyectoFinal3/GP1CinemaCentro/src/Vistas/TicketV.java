@@ -354,16 +354,41 @@ public class TicketV extends javax.swing.JInternalFrame {
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:        
         
+            Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+            String fila = (String) jcbFila.getSelectedItem();
             borrarTicket();
             limpiar();
             cargarTabla();
+            cargarFilas();
+            cargarNumero(fila);
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        String fila = (String) jcbFila.getSelectedItem();
+        String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
+        
+        int filaTabla = jtTickets.getSelectedRow();
+        
+        if (filaTabla == -1) {
+            
+            JOptionPane.showMessageDialog(this, "Seleccione un ticket");
+            return;
+        } 
+        
+        if (proy == null || fila == "" || numeroStr.isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Tiene que elegir Proyeccion, fila y numero. Para Modificar ");
+            return;
+        }
+        
         modificarTicket();
         
         cargarTabla();
+        cargarFilas();
+        cargarNumero(fila);
     }//GEN-LAST:event_jbModificarActionPerformed
 
 
@@ -451,9 +476,11 @@ public class TicketV extends javax.swing.JInternalFrame {
         int idTicket = (int) modelo.getValueAt(filaTabla, 0);
         
         String nuevaFila = jcbFila.getSelectedItem().toString();
-        int nuevoNumero = Integer.parseInt(jcbNumero.getSelectedItem().toString());
+        String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
         
-        tD.modificarFYN(idTicket, nuevaFila, nuevoNumero);
+        int nro = Integer.parseInt(numeroStr);
+        
+        tD.modificarFYN(idTicket, nuevaFila, nro);
     }
     
     private void borrarTicket(){

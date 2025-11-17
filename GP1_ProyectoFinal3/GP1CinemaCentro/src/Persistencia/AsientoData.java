@@ -387,6 +387,8 @@ public List<String> obtenerNumeros (String fila, int idSala){
                 proy.setHoraFin(rs.getTime("horaFin"));
                 proy.setPrecioLugar(rs.getDouble("precio"));
                 
+                asiento.setSala(s);
+                
                 asiento.setProy(proy);
             }
             rs.close();
