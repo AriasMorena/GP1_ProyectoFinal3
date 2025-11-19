@@ -558,9 +558,14 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
             }
         }
         try{
-            
-            
+                        
             double precio = Double.parseDouble(jtPrecio.getText());    
+
+            if (precio <= 0) {
+                
+                JOptionPane.showMessageDialog(this, "Precio tiene que ser mayor a 0");
+                return;
+            }else {
             
             if (horaInicio == null || horaFin == null || idiomas.isEmpty() || precio == 0 || peliSele == null || salaSele == null ) {
                 
@@ -578,9 +583,9 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
                     proyeD.guardarProyeccion(proy, peliSele.getIdPelicula(), salaSele.getIdSala());
                 
                     JOptionPane.showMessageDialog(this, "Proyeccion guardad exitosamente.");
-                }
-                
+                }     
             }
+         }
         } catch (NumberFormatException x){
             
             JOptionPane.showMessageDialog(this, "Numero Invalido.");
@@ -772,6 +777,13 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
 
             double precio = Double.parseDouble(jtPrecio.getText().trim());
 
+            if (precio <= 0) {
+                
+                JOptionPane.showMessageDialog(this, "Precio tiene que ser mayor a 0");
+                return;
+                
+            } else {
+                
             java.util.Date horaInicio = (java.util.Date) jsHoraInicio.getValue();
             java.util.Date horaFin = (java.util.Date) jsHoraFin.getValue();
         
@@ -797,7 +809,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
             proy.setPrecioLugar(precio);
             
             proyeD.actualizarProyeccion(proy);
-
+            }
             }
             
         } catch (NumberFormatException x){

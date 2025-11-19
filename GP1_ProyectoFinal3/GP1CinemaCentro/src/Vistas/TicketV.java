@@ -471,6 +471,12 @@ public class TicketV extends javax.swing.JInternalFrame {
                 precio = precio - 1000;
                 JOptionPane.showMessageDialog(this, "La pelicula recibe un descuento de $1000 por estar Subtitulada");
             }
+            
+            if (precio < 0) {
+            
+                precio = 0 ;
+            }
+            
               
             Ticket ticket = new Ticket(0, fechaF, fechaC, precio, comprS, asiento);
             
