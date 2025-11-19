@@ -32,91 +32,89 @@ public class AsientoData {
     // ------------ Agregar y Generar Asientos ------------
     public void agregarAsiento (Asiento asiento) {
     
-        String sql = "INSERT INTO asiento (fila, numero, estado, id_proyeccion, id_sala)" + "VALUES (?, ?, ?, ?, ?)";
-    
-            try {
-                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                
+        String sql = "INSERT INTO asiento (fila, numero, estado, id_proyeccion , id_sala)"
+                    + " VALUES( ?, ?, ?, ?, ?)";
+            try{
+                PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, asiento.getFila());
                 ps.setInt(2, asiento.getNúmero());
                 ps.setBoolean(3, asiento.isDisponible());
-                
-                if (asiento.getProy() != null) {
-                    
-                    ps.setInt(4, asiento.getProy().getIdProyeccion());
-                } else {
-                    
-                    ps.setNull(4, java.sql.Types.INTEGER);
-                }
+                ps.setInt(4, asiento.getProy().getIdProyeccion());
                 ps.setInt(5, asiento.getSala().getIdSala());
                 
                 ps.executeUpdate();
-                
-                ResultSet rs = ps.getGeneratedKeys();
-                
-                if (rs.next()){
-                
-                    int id = rs.getInt(1);
-                   
-                }
                 ps.close();
-                              
                 
             } catch (SQLException e) {
                 
                JOptionPane.showMessageDialog(null,"Error al agregar el asiento." + e.getMessage());
             }
+        
     }
     
     public void generarAsientos (Sala sala, Proyeccion proyeccion){
         
+        if (existeAsientoProy(proyeccion.getIdProyeccion())) {
+            
+            JOptionPane.showMessageDialog(null, "Esta proyeccion ya tiene asientos generados.");
+            return;
+        }
+        
         int capacidad = sala.getCapacidad();
         int asientosPorFila = 10;
+        
         int filas = (int) Math.ceil((double) capacidad / asientosPorFila);
         
         char letraFila = 'A';
         int contador = 0;
+
         
         for (int f = 0; f < filas; f++) {
             
+
             for (int n = 1; n <= asientosPorFila; n++) {
-                
+                                
                 if (contador >= capacidad) {
-                    
+                    JOptionPane.showMessageDialog(null, "Se ocuparon todos los lugars");
                     break;
-                } else {
-                    
-                    Asiento asiento = new Asiento (String.valueOf(letraFila), n, true, proyeccion, sala);
-                    agregarAsiento(asiento);
-                    contador++;
-                }
+                } 
+                   
+                Asiento asiento = new Asiento (String.valueOf(letraFila), n, true, proyeccion, sala);
+                
+                agregarAsiento(asiento);
+                contador = contador +1;
             }
-        letraFila++;
+            
+         letraFila++;
 
         }
         
-        JOptionPane.showMessageDialog(null, "Se generaron " + contador + " asiento para la sala " + sala.getNroSala());
-    }
+        JOptionPane.showMessageDialog(null, "Se generaron " + contador + " asiento para la proyeccion" + proyeccion.getIdProyeccion());
+    } 
     
-    public boolean existeAsiento ( int idSala){
+    public boolean existeAsientoProy (int idProyeccion){
         
-        String sql = "SELECT 1 FROM asiento WHERE id_sala = ?";
+        String sql = "SELECT 1 FROM asiento WHERE id_proyeccion = ? LIMIT 1 ";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
-           
-            ps.setInt(1, idSala);
+            ps.setInt(1, idProyeccion);
             
-            ResultSet rs= ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            boolean existe = rs.next();
             
-            return rs.next();
+            rs.close();
+            ps.close();
+                  
+            return existe;
+
+        }catch (SQLException e){
             
-        } catch (SQLException e){
-            
-            JOptionPane.showMessageDialog(null, "ERROR al verificar asientos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERROR al verificar asientos: " +e);
         }
+        
         return false;
-    } 
+    }
     // ------------ Buscar Asiento ------------
     
     public Asiento buscarAsiento (int idSala, String fila, int numero) {
@@ -163,21 +161,24 @@ public class AsientoData {
        return asiento;
     }
     // ------------ Elimar Asientos ------------
-    public void borrarAsientoPorSala (int idSala){
+    public void borrarAsientoPorProyeccion (int idProy){
     
-        String sql = "DELETE FROM asiento WHERE id_sala = ?";
+        String sql = "DELETE FROM asiento WHERE id_proyeccion = ?";
         
         SalaData sd = new SalaData ();
+        ProyeccionData pd = new ProyeccionData();
+        
+        Proyeccion proy = pd.buscarProyeccion(idProy);
         
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, idSala);
+                ps.setInt(1, idProy);
                 
                 int fila = ps.executeUpdate();
                 
                 if (fila < 0){
                     
-                  JOptionPane.showMessageDialog(null, "Se eliminaron " + fila + " asientos de la sala Numero " + sd.buscarSala(idSala).getNroSala());
+                  JOptionPane.showMessageDialog(null, "Se eliminaron " + fila + " asientos de la sala Numero " + proy.getSala().getNroSala()  );
                 
                 }          
             } catch (SQLException ex) {
@@ -187,11 +188,11 @@ public class AsientoData {
     }
     
     // ------------ Mostrar Todos los Asientos de una Sala ------------
-    public List<Asiento>listarAsientos(int idSala){
+    public List<Asiento>listarAsientos(int idProy){
         
         List<Asiento>listarAsientos = new ArrayList<>();
     
-        String sql = "SELECT * FROM asiento WHERE id_sala = ? ORDER BY fila , numero ";
+        String sql = "SELECT * FROM asiento WHERE id_proyeccion = ? ORDER BY fila , numero ";
         
         ProyeccionData pd= new ProyeccionData();
         SalaData sd = new SalaData();
@@ -199,7 +200,7 @@ public class AsientoData {
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
                 
-                ps.setInt(1, idSala);
+                ps.setInt(1, idProy);
 
                 ResultSet rs = ps.executeQuery();                
                 
@@ -212,16 +213,17 @@ public class AsientoData {
                     asientos.setNúmero(rs.getInt("numero"));
                     asientos.setDisponible(rs.getBoolean("estado"));
                     
-                    int idProy = rs.getInt("id_proyeccion");
-                    int idSalaB = rs.getInt("id_sala");
+                    int idSala = rs.getInt("id_sala");
+                    asientos.setSala(sd.buscarSala(idSala));
                     
                     asientos.setProy(pd.buscarProyeccion(idProy));
-                    asientos.setSala(sd.buscarSala(idSalaB));
-                       
+
+                    
                     listarAsientos.add(asientos);
                 
                 }
                 ps.close();
+                rs.close();
                 
             } catch (SQLException ex) {
                 
@@ -285,15 +287,15 @@ public class AsientoData {
     // ------------ ComboBox Filas y Numeros ------------
     
     
-public List<String> obtenerFilas (int idSala){
+public List<String> obtenerFilas (int idProye){
     
     List<String> filas = new ArrayList<>();
 
-    String sql = "SELECT DISTINCT fila FROM asiento WHERE id_sala = ? ORDER BY fila";
+    String sql = "SELECT DISTINCT fila FROM asiento WHERE id_proyeccion = ? ORDER BY fila";
 
     try{
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idSala);
+        ps.setInt(1, idProye);
         
         ResultSet rs = ps.executeQuery();
         
@@ -311,14 +313,14 @@ public List<String> obtenerFilas (int idSala){
     return filas;
 }
 
-public List<String> obtenerNumeros (String fila, int idSala){
+public List<String> obtenerNumeros (int idProye, String fila){
     List<String> numeros = new ArrayList<>();
-    String sql = "SELECT numero, estado FROM asiento WHERE id_sala = ? AND fila = ? ORDER BY numero ";
+    String sql = "SELECT numero, estado FROM asiento WHERE id_proyeccion = ? AND fila = ? ORDER BY numero ";
     
     try{
         PreparedStatement ps = con.prepareStatement(sql);
         
-        ps.setInt(1, idSala);
+        ps.setInt(1, idProye);
         ps.setString(2, fila);
         
         ResultSet rs = ps.executeQuery();

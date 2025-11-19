@@ -50,8 +50,9 @@ public class ProyeccionData {
            
            JOptionPane.showMessageDialog(null, "Proyeccion guardada exitosamente.");
            }
+           
            ps.close();
-                  
+                
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Error al guardar la proyeccion." + ex.getMessage());
        }              
@@ -122,8 +123,9 @@ public class ProyeccionData {
         ArrayList<Proyeccion>Proyecciones = new ArrayList<>();
         
         String sql = "SELECT p.id_proyeccion AS idProyeccion , "
-                + "p. id_sala , "
+                + "p.id_sala , "
                 + "s.NroSala , "
+                + "s.capacidad , "
                 + "pe.titulo , "
                 + "p.idioma , "
                 + "p.es3D , "
@@ -148,6 +150,7 @@ public class ProyeccionData {
              Sala sala = new Sala();
              sala.setIdSala(rs.getInt("id_sala"));
              sala.setNroSala(rs.getInt("nroSala"));
+             sala.setCapacidad(rs.getInt("capacidad"));
              
              Proyeccion proy = new Proyeccion ();
              proy.setIdProyeccion(rs.getInt("idProyeccion"));

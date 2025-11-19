@@ -608,10 +608,8 @@ public class TicketV extends javax.swing.JInternalFrame {
             
             return;
         }
-        
-        int idSala = proy.getSala().getIdSala();
-        
-        List <String> filas = asientoD.obtenerFilas(idSala);
+                
+        List <String> filas = asientoD.obtenerFilas(proy.getIdProyeccion());
         
         for (String f: filas) {
             
@@ -624,11 +622,10 @@ public class TicketV extends javax.swing.JInternalFrame {
         jcbNumero.removeAllItems();
         
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
-        int idSala = proy.getSala().getIdSala();
         
-        List<String> numeros = asientoD.obtenerNumeros(fila, idSala);
+        List<String> numeros = asientoD.obtenerNumeros(proy.getIdProyeccion(), fila);
         
-        if (asientoD.asientoDisponible(idSala)) {
+        if (asientoD.asientoDisponible(proy.getIdProyeccion())) {
             
         }
         for (String num : numeros) {

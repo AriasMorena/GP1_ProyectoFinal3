@@ -34,12 +34,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
         limpiar();
         configurarColores ();
         this.setLocation(300, 10);
-        /*
-        jcbProyeccion.setSelectedIndex(-1);
-        jcbSalas.setSelectedIndex(-1);
-        jcbFilas.setSelectedIndex(-1);
-        jcbNumero.setSelectedIndex(-1);
-        */
+        
     }
 
     /**
@@ -256,6 +251,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
     private void jcbProyeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProyeccionActionPerformed
         // TODO add your handling code here:
+        cargarCombosS();
     }//GEN-LAST:event_jcbProyeccionActionPerformed
 
     private void jbGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarActionPerformed
@@ -302,7 +298,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
     private void jbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMostrarActionPerformed
         // TODO add your handling code here:
-        mostrarAsientosXSalas();
+        mostrarAsientosXProy();
         jcbProyeccion.setSelectedIndex(-1);
         jcbSalas.setSelectedIndex(-1);
         jcbFilas.setSelectedIndex(-1);
@@ -322,7 +318,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
             
             eliminarAsientos();
         }
-        
+        mostrarAsientosXProy();
         limpiar ();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
@@ -410,25 +406,20 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         AsientoData ad = new AsientoData();
         
-        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        Sala sala = proy.getSala();
+        
+        ad.generarAsientos(sala, proy);
+        
+    }
+    
+    private void mostrarAsientosXProy(){
         
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         
-        if (ad.existeAsiento(salaS.getIdSala()) && proy != null) {
-            
-            JOptionPane.showMessageDialog(this, "Esta sala ya tiene asientos. No se pueden generar si hay asientos. ");
-        } else {
-            
-            ad.generarAsientos(salaS, proy);
-        }
-    }
-    
-    private void mostrarAsientosXSalas(){
-        
-        Sala salaS = (Sala) jcbSalas.getSelectedItem();
         AsientoData ad = new AsientoData();
         
-        if (salaS == null) {
+        if (proy == null) {
             
             JOptionPane.showMessageDialog(this, "Debe eligir una sala.");
             return;
@@ -436,7 +427,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         modelo.setRowCount(0);
         
-        List<Asiento> lista = ad.listarAsientos(salaS.getIdSala());
+        List<Asiento> lista = ad.listarAsientos(proy.getIdProyeccion());
         
         for (Asiento a : lista) {
             
@@ -453,6 +444,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
             modelo.addRow(new Object []{
                 a.getProy().getIdProyeccion() ,
                 a.getSala().getNroSala() , 
+                a.getProy().getPelicula().getTitulo() ,
                 a.getFila() ,
                 a.getNúmero() ,
                 estado    
@@ -462,22 +454,22 @@ public class AsientosV extends javax.swing.JInternalFrame {
     
     private void eliminarAsientos(){
         
-        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         
         AsientoData ad = new AsientoData();
 
         
-        if (salaS == null) {
+        if (proy == null) {
             
             JOptionPane.showMessageDialog(this, "Debe Seleccionar una Sala");
             return;
         } else {
         
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar todos los asientos de la sala " + salaS.getNroSala() + " ?", "Confirma eliminacion", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar todos los asientos de la sala " + proy.getSala().getNroSala() + " ?", "Confirma eliminacion", JOptionPane.YES_NO_OPTION);
         
             if (confirm == JOptionPane.YES_OPTION) {
             
-                ad.borrarAsientoPorSala(salaS.getIdSala());
+                ad.borrarAsientoPorProyeccion(proy.getIdProyeccion());
             }
         }
         
@@ -514,6 +506,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
                 
                 asiento.getProy().getIdProyeccion(),
                 asiento.getSala().getNroSala(),
+                asiento.getProy().getPelicula().getTitulo() ,
                 asiento.getFila(), 
                 asiento.getNúmero(),
                 estado
@@ -551,7 +544,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se Encotro el asiento indicado");
         }
         
-        mostrarAsientosXSalas();
+        mostrarAsientosXProy();
     }
     
     private void liberar(){
@@ -582,7 +575,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
 
         }
         
-        mostrarAsientosXSalas();
+        mostrarAsientosXProy();
     }
    //------------ Vistas ------------
     
@@ -602,15 +595,20 @@ public class AsientosV extends javax.swing.JInternalFrame {
     
     private void cargarCombosS(){
         jcbSalas.removeAllItems();
+        
         SalaData salaD = new SalaData ();
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
                 
-        for (Sala s: salaD.listarSala()) {
+        if(proy == null){
+            return;
+        }
+        
+        Sala sala = proy.getSala();
+        
+        if (sala != null) {
             
-            if (!s.getEstado().equalsIgnoreCase("Inhabilitado")) {
-                
-                jcbSalas.addItem(s);
-
-            }
+            jcbSalas.addItem(proy.getSala());
         }
     }
     
@@ -618,11 +616,11 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         jcbFilas.removeAllItems();
         
-        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        Proyeccion proye = (Proyeccion) jcbProyeccion.getSelectedItem();
         
         AsientoData asientoD = new AsientoData();
         
-        List<String> filas = asientoD.obtenerFilas(salaS.getIdSala());
+        List<String> filas = asientoD.obtenerFilas(proye.getIdProyeccion());
         
         for (String fila : filas){
             
@@ -637,11 +635,11 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         String fila = (String) jcbFilas.getSelectedItem();
         
-        Sala salaS = (Sala) jcbSalas.getSelectedItem();
+        Proyeccion proye = (Proyeccion) jcbProyeccion.getSelectedItem();
         
         AsientoData asientoD = new AsientoData();
         
-        List <String> numeros = asientoD.obtenerNumeros(fila, salaS.getIdSala());
+        List <String> numeros = asientoD.obtenerNumeros(proye.getIdProyeccion(), fila);
         
         for (String num : numeros) {
             
@@ -652,7 +650,6 @@ public class AsientosV extends javax.swing.JInternalFrame {
     private void limpiar(){
         
         jcbProyeccion.setSelectedIndex(-1);
-        jcbSalas.setSelectedIndex(-1);
         jcbFilas.setSelectedIndex(-1);
         jcbNumero.setSelectedIndex(-1);
     }
@@ -660,6 +657,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
         
         modelo.addColumn("ID Proyeccion");
         modelo.addColumn("Nro Sala");
+        modelo.addColumn("Pelicula");
         modelo.addColumn("Fila");
         modelo.addColumn("Numero");
         modelo.addColumn("Estado");
@@ -677,7 +675,7 @@ public class AsientosV extends javax.swing.JInternalFrame {
                     
                     Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     
-                    String estado = table.getValueAt(row, 4).toString();
+                    String estado = table.getValueAt(row, 5).toString();
                     
                     if (estado.equalsIgnoreCase("Disponible")) {
                         c.setBackground(new Color(144, 238, 144));                   
