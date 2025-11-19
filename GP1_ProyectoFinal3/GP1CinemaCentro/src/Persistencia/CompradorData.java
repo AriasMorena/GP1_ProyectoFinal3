@@ -80,7 +80,15 @@ public class CompradorData {
             } 
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar comprador: " + ex.getMessage());
+            
+            if (ex.getErrorCode() == 1062) {
+            
+                JOptionPane.showMessageDialog(null, "Ya existe un registro con esa clave primaria.");
+                
+            }else {
+                
+                JOptionPane.showMessageDialog(null, "Error al buscar comprador: " + ex.getMessage());
+            }          
         }
         return comprador;
     }
