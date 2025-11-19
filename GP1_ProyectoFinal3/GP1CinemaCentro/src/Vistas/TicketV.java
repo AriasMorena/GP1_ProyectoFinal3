@@ -628,6 +628,9 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         List<String> numeros = asientoD.obtenerNumeros(fila, idSala);
         
+        if (asientoD.asientoDisponible(idSala)) {
+            
+        }
         for (String num : numeros) {
             
             jcbNumero.addItem(num);

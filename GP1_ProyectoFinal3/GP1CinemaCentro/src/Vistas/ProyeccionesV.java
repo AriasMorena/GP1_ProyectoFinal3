@@ -563,10 +563,17 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
 
             } else {
                 
-                Proyeccion proy = new Proyeccion( 0 ,peliSele, salaSele, idiomas, apto, sub, horaI, horaF, precio, estado);
+                if (proyeD.existeProyeccionXH(salaSele.getIdSala(), horaI, horaF)) {
+                    
+                    JOptionPane.showMessageDialog(this, "Ya existe una proyeccion en ese horario en esta hora.");
+                    
+                } else {
+                    Proyeccion proy = new Proyeccion( 0 ,peliSele, salaSele, idiomas, apto, sub, horaI, horaF, precio, estado);
                 
-                proyeD.guardarProyeccion(proy, peliSele.getIdPelicula(), salaSele.getIdSala());
+                    proyeD.guardarProyeccion(proy, peliSele.getIdPelicula(), salaSele.getIdSala());
                 
+                    JOptionPane.showMessageDialog(this, "Proyeccion guardad exitosamente.");
+                }
                 
             }
         } catch (NumberFormatException x){

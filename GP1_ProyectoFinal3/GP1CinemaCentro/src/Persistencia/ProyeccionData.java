@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.List;
+import java.sql.Time;
 /**
  *
  * @author arias
@@ -284,5 +285,29 @@ public class ProyeccionData {
                 JOptionPane.showMessageDialog(null, "Error al inhabilitar la Proyeccion " + ex);
             }
         
-    }    
+    }
+
+    public boolean existeProyeccionXH(int idSala, Time inicio, Time fin){
+        
+        String sql = "SELECT COUNT(*) FROM proyeccion "
+                + "WHERE id_sala = ? "
+                + "AND (horaInicio < ? AND horaFin > ?)";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSala);
+            ps.setTime(2, fin);
+            ps.setTime(3, inicio);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error verifcando horarios: " + ex.getMessage());
+        }
+        return false;  
+    }
 }
