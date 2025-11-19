@@ -6,10 +6,13 @@ package Vistas;
 
 import Persistencia.*;
 import Entidades.*;
+import java.awt.Color;
+import java.awt.Component;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import java.sql.Time;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -25,6 +28,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
         cabecera();
         cargarCombosP();
         cargarCombosS();
+        configurarColores ();
         jcbPeliculas.setSelectedIndex(-1);
         jcbSalas.setSelectedIndex(-1);
         this.setLocation(180, 0);
@@ -361,6 +365,7 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
              
             elimarProy();
             limpiarCampos();
+            
         }
          
          mostraPro();    
@@ -907,4 +912,41 @@ public class ProyeccionesV extends javax.swing.JInternalFrame {
             jtPrecio.setText("");
             jtIdiomas.setText("");
      }
+     
+     private void configurarColores (){
+        
+        jtProyecciones.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            
+            @Override
+        
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+                    
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    
+                    String estado = table.getValueAt(row, 9).toString();
+                    
+                    if (estado.equalsIgnoreCase("Habilitado")) {
+                        c.setBackground(new Color(144, 238, 144));                   
+                    
+                    } else {
+                        
+                        if (estado.equalsIgnoreCase("Inhabilitado")) {
+                            
+                            c.setBackground(new Color(255, 102, 102));
+                        } else {
+                            
+                            c.setBackground(Color.WHITE);
+                        }
+                    }
+                    
+                    if (isSelected) {
+                    
+                        c.setBackground(new Color (135, 206, 250));
+                    }
+                
+            
+            return c;
+                }
+        });
+    }
 }
