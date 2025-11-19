@@ -644,6 +644,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         if (proy == null) {
             
+            JOptionPane.showMessageDialog(this, "Seleccione una proyeccion primero.");
             return;
         }
                 
@@ -660,6 +661,12 @@ public class TicketV extends javax.swing.JInternalFrame {
         jcbNumero.removeAllItems();
         
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (proy == null) {
+            
+            JOptionPane.showMessageDialog(this, "Seleccione una proyeccion primero.");
+            return;
+        }
         
         List<String> numeros = tD.obtenerNumero(proy.getIdProyeccion(), fila);
         

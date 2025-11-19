@@ -122,9 +122,14 @@ public class TicketData {
         
         Asiento asientoActual = ticket.getAsientoComprado();
     
-        int idSala = asientoActual.getSala().getIdSala();
+        if (asientoActual.getSala() == null) {
+            
+            JOptionPane.showMessageDialog(null, "El asiento actual no tiene sala asociada");
+            return;
+        }
         
-        Asiento asientoNuevo = aD.buscarAsiento(idSala, nuevaFila, nuevoNumero);
+        int idProy = asientoActual.getProy().getIdProyeccion();
+        Asiento asientoNuevo = aD.buscarAsientoProy(idProy, nuevaFila, nuevoNumero);
         
         if (asientoNuevo == null) {
             
@@ -138,9 +143,6 @@ public class TicketData {
             return;
         }
         
-        aD.liberarAsiento(asientoActual.getIdAsiento());
-        aD.ocuparAsiento(asientoNuevo.getIdAsiento());
-        
         String sql = "UPDATE ticket_compra SET id_lugar = ? "
                 + "WHERE id_ticket = ?";
         
@@ -148,11 +150,17 @@ public class TicketData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, asientoNuevo.getIdAsiento());
             ps.setInt(2, idTicket);
+            
             ps.executeUpdate();
             
+            
+            aD.liberarAsiento(asientoActual.getIdAsiento());
+            aD.ocuparAsiento(asientoNuevo.getIdAsiento());
+        
             JOptionPane.showMessageDialog(null, "Ticket modificado correctamente.");
             
         } catch (SQLException ex) {
+            
            JOptionPane.showMessageDialog(null, "Error al actualizar el ticket." + ex.getMessage());
         }      
     }

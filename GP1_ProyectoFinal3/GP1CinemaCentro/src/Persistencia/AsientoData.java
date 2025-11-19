@@ -445,7 +445,7 @@ public List<String> obtenerNumeros (int idProye, String fila){
                 
                 Asiento a = new Asiento();
                 a.setIdAsiento(rs.getInt("id_lugar"));
-                a.setFila(rs.getNString("fila"));
+                a.setFila(rs.getString("fila"));
                 a.setNúmero(rs.getInt("numero"));
                 a.setDisponible(rs.getBoolean("estado"));
                 
