@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 
 
@@ -161,8 +162,13 @@ public class CompradorData {
                 JOptionPane.showMessageDialog(null, "No se encontró comprador con ese DNI.");
             }
             ps.close();
-        } catch (SQLException ex ){
-            JOptionPane.showMessageDialog(null,"Error al eliminar comprador:" + ex.getMessage());
+        
+        } catch(SQLIntegrityConstraintViolationException  ex){
+            
+            JOptionPane.showMessageDialog(null, "No se puede borrar el comprador porque tiene un ticket asociado.");
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
         }
     }
 }

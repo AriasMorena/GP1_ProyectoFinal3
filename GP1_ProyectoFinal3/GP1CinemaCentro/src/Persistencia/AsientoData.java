@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
@@ -181,10 +182,13 @@ public class AsientoData {
                   JOptionPane.showMessageDialog(null, "Se eliminaron " + fila + " asientos de la sala Numero " + proy.getSala().getNroSala()  );
                 
                 }          
-            } catch (SQLException ex) {
-               
-                JOptionPane.showMessageDialog(null, "Error al borrar los asientos." + ex.getMessage());
-            }
+            } catch(SQLIntegrityConstraintViolationException  ex){
+            
+              JOptionPane.showMessageDialog(null, "No se puede borrar el asiento porque tiene un ticket asociado.");
+              } catch (SQLException ex){
+            
+              JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
+        }
     }
     
     // ------------ Mostrar Todos los Asientos de una Sala ------------

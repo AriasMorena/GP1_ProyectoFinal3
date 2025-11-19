@@ -10,6 +10,7 @@ import Entidades.conexion;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -98,9 +99,13 @@ public class SalaData {
                 JOptionPane.showMessageDialog(null, "Sala borrada con exito.");
             }
             
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al borrar la sala" + ex.getMessage());
-        }  
+        } catch(SQLIntegrityConstraintViolationException  ex){
+            
+            JOptionPane.showMessageDialog(null, "No se puede borrar la sala porque tiene una proyeccion, un ticket o un asiento asociado.");
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
+        }
     
     }
     

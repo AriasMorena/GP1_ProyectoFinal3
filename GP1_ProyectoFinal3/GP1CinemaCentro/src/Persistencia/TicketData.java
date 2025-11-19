@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,9 +200,12 @@ public class TicketData {
             }
             ps.close();
         
-        }catch (SQLException ex){
-        
-            JOptionPane.showMessageDialog(null, "Error al borrar el ticket." + ex.getMessage());
+        }catch(SQLIntegrityConstraintViolationException  ex){
+            
+            JOptionPane.showMessageDialog(null, "No se puede borrar la sala porque tiene proyecciones asociadas.");
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
         }           
     }
     

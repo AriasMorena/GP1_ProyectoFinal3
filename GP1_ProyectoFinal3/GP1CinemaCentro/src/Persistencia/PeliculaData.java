@@ -7,6 +7,7 @@ package Persistencia;
 import Entidades.Pelicula;
 import Entidades.conexion;
 import java.sql.SQLException;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.util.Date;
@@ -138,7 +139,10 @@ public class PeliculaData {
                  JOptionPane.showMessageDialog(null, "No se encontró ninguna pelicula con ese ID.");
              }
              ps.close();
-        }catch(SQLException ex){
+        }catch(SQLIntegrityConstraintViolationException  ex){
+            
+            JOptionPane.showMessageDialog(null, "No se puede borrar la pelicula porque tiene una proyeccion, un asiento o un ticket asociado.");
+        } catch (SQLException ex){
             
             JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
         }

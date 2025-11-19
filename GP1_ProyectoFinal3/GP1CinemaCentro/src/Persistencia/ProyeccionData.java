@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.sql.Time;
 /**
@@ -112,10 +113,13 @@ public class ProyeccionData {
         }
         ps.close();
         
-        }catch (SQLException ex){
-        
-            JOptionPane.showMessageDialog(null, "Error al borrar la proyeccion." + ex.getMessage());
-        }        
+        }catch(SQLIntegrityConstraintViolationException  ex){
+            
+            JOptionPane.showMessageDialog(null, "No se puede borrar la proyeccion porque tiene un ticket o un asiento asociado.");
+        } catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Error al eliminar la pelicula:" + ex.getMessage());
+        }       
     }
     
     public List<Proyeccion>listarProyecciones(){
