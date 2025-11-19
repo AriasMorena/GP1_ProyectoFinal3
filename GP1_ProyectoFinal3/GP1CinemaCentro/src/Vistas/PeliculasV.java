@@ -6,9 +6,13 @@ package Vistas;
 
 import Entidades.*;
 import Persistencia.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +31,7 @@ public class PeliculasV extends javax.swing.JInternalFrame {
     public PeliculasV() {
         initComponents();
         cabecera();
+        configurarColores ();
         this.setLocation(250, 10);
     }
 
@@ -737,5 +742,41 @@ public class PeliculasV extends javax.swing.JInternalFrame {
         jtOrigen.setText("");
         jtGenero.setText("");
         jdcEstreno.setDate(null);
+    }
+     private void configurarColores (){
+        
+        jtPeliculas.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            
+            @Override
+        
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+                    
+                    Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    
+                    String estado = table.getValueAt(row, 7).toString();
+                    
+                    if (estado.equalsIgnoreCase("Si")) {
+                        c.setBackground(new Color(144, 238, 144));                   
+                    
+                    } else {
+                        
+                        if (estado.equalsIgnoreCase("No")) {
+                            
+                            c.setBackground(new Color(255, 102, 102));
+                        } else {
+                            
+                            c.setBackground(Color.WHITE);
+                        }
+                    }
+                    
+                    if (isSelected) {
+                    
+                        c.setBackground(new Color (135, 206, 250));
+                    }
+                
+            
+            return c;
+                }
+        });
     }
 }

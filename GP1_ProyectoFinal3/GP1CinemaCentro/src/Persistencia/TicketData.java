@@ -38,9 +38,9 @@ public class TicketData {
     
     public void generarTicket (Ticket ticket) {
         
-        int idAsiento = ticket.getAsientoComprado().getIdAsiento();
+        Asiento a = ticket.getAsientoComprado();
         
-        if (!aD.asientoDisponible(idAsiento)) {
+        if (aD.asientoDisponible(a.getProy().getIdProyeccion(), a.getFila(), a.getNúmero())) {
             
             JOptionPane.showMessageDialog(null, "El asiento seleccionado ya esta ocupado.");
             return;
@@ -58,6 +58,7 @@ public class TicketData {
             ps.setDate(2, java.sql.Date.valueOf(ticket.getFechaCompra()));
             
             ps.setDate(3, java.sql.Date.valueOf(ticket.getFechaFuncion()));
+            
             ps.setDouble(4, ticket.getPrecio());
             
             ps.setInt(5, ticket.getComprador().getDni());
@@ -337,6 +338,62 @@ public class TicketData {
             JOptionPane.showMessageDialog(null, "Error al buscar Tickets por Proyeccion. " + ex.getMessage() );
         }
         return lista;
+    }
+    
+    public List<String> obtenerFilas(int idProy){
+        
+        List<String> filas = new ArrayList<>();
+        String sql = "SELECT DISTINCT fila "
+                + "FROM asiento "
+                + "WHERE id_proyeccion = ? AND estado = 1 "
+                + "ORDER BY fila";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idProy);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                
+                filas.add(rs.getString("fila"));
+            }
+            rs.close();
+            ps.close();
+            
+        }catch (SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "ERROR al obtener filas: " + e.getMessage());
+        }
+        
+        return filas;
+    }
+    
+    public List<String> obtenerNumero(int idProy, String fila){
+        
+        List<String> numeros = new ArrayList<>();
+        
+        String sql = "SELECT numero "
+                    +"FROM asiento "
+                    + "WHERE id_proyeccion = ? AND fila = ? AND estado = 1 "
+                + "ORDER BY numero";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idProy);
+            ps.setString(2, fila);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                
+                numeros.add(String.valueOf(rs.getInt("numero")));
+            }
+            rs.close();
+            ps.close();
+        }catch (SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "ERROR al obtene numeros: " + e.getMessage());
+        }
+
+        return numeros;
     }
     
 }

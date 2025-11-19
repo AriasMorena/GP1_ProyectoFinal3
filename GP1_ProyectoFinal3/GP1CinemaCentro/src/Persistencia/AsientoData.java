@@ -404,19 +404,22 @@ public List<String> obtenerNumeros (int idProye, String fila){
         return asiento;
     }
     
-    public boolean asientoDisponible(int idLugar){
+    public boolean asientoDisponible(int idProyeccion, String fila, int numero){
         
-        String sql = "SELECT estado FROM asiento WHERE id_lugar = ?";
+        String sql = "SELECT estado FROM asiento "
+                + "WHERE id_proyeccion = ? AND fila = ? AND numero = ?";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idLugar);
+            ps.setInt(1, idProyeccion);
+            ps.setString(2, fila);
+            ps.setInt(3, numero);
             
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
                 
-                return rs.getBoolean("estado");
+                return !rs.getBoolean("estado");
             }
         } catch (SQLException ex){
             
@@ -425,6 +428,41 @@ public List<String> obtenerNumeros (int idProye, String fila){
         
         return false;
     }
-
-
+    
+    public Asiento buscarAsientoProy (int idProy,  String fila, int numero){
+        
+        String sql = "SELECT * FROM asiento WHERE id_proyeccion = ? AND fila = ? AND numero = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idProy);
+            ps.setString(2, fila);
+            ps.setInt(3, numero);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                Asiento a = new Asiento();
+                a.setIdAsiento(rs.getInt("id_lugar"));
+                a.setFila(rs.getNString("fila"));
+                a.setNúmero(rs.getInt("numero"));
+                a.setDisponible(rs.getBoolean("estado"));
+                
+                ProyeccionData pd = new ProyeccionData();
+                a.setProy(pd.buscarProyeccion(idProy));
+                
+                SalaData sd = new SalaData();
+                a.setSala(sd.buscarSala(rs.getInt("id_sala")));
+                
+                return a;
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "Error al buscar asiento: " + e.getMessage());
+        }
+        return null;
+    }
+    
+    
 }

@@ -62,7 +62,6 @@ public class TicketV extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jcbComprador = new javax.swing.JComboBox<>();
         jcbProyeccion = new javax.swing.JComboBox<>();
-        jtSala = new javax.swing.JTextField();
         jcbFila = new javax.swing.JComboBox<>();
         jcbNumero = new javax.swing.JComboBox<>();
         jbComprar = new javax.swing.JButton();
@@ -72,6 +71,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         jbMostrar = new javax.swing.JButton();
         jbBuscarP = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
+        jcbSalas = new javax.swing.JComboBox<>();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -167,6 +167,12 @@ public class TicketV extends javax.swing.JInternalFrame {
             }
         });
 
+        jcbSalas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSalasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,8 +195,8 @@ public class TicketV extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jtSala, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jcbSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel7)
                                         .addGap(18, 18, 18)
@@ -239,11 +245,11 @@ public class TicketV extends javax.swing.JInternalFrame {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jtSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jcbFila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jcbNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbSalas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbComprar)
@@ -267,13 +273,10 @@ public class TicketV extends javax.swing.JInternalFrame {
     private void jcbProyeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProyeccionActionPerformed
         // TODO add your handling code here:
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
-        
         if (proy != null) {
             
-            jtSala.setText("SALA: " + proy.getSala().getNroSala());
-        
-            cargarFilas();
-        } 
+            cargarCombosS();
+        }
     }//GEN-LAST:event_jcbProyeccionActionPerformed
 
     private void jcbFilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFilaActionPerformed
@@ -282,7 +285,7 @@ public class TicketV extends javax.swing.JInternalFrame {
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         String fila = (String) jcbFila.getSelectedItem();
         
-        if (proy == null || fila == null) {
+        if (proy == null) {
             
             return;
         } else {
@@ -391,6 +394,17 @@ public class TicketV extends javax.swing.JInternalFrame {
         cargarNumero(fila);
     }//GEN-LAST:event_jbModificarActionPerformed
 
+    private void jcbSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSalasActionPerformed
+        // TODO add your handling code here:
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+        
+        if (proy != null) {
+            
+            cargarFilas();
+        }
+        
+    }//GEN-LAST:event_jcbSalasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -411,28 +425,34 @@ public class TicketV extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jcbFila;
     private javax.swing.JComboBox<String> jcbNumero;
     private javax.swing.JComboBox<Object> jcbProyeccion;
-    private javax.swing.JTextField jtSala;
+    private javax.swing.JComboBox<Object> jcbSalas;
     private javax.swing.JTable jtTickets;
     // End of variables declaration//GEN-END:variables
 
     private void comprarTicket(){
         
-       Proyeccion proyS= (Proyeccion) jcbProyeccion.getSelectedItem();
+        Proyeccion proyS= (Proyeccion) jcbProyeccion.getSelectedItem();
         
-       Comprador comprS = (Comprador) jcbComprador.getSelectedItem();
+        Comprador comprS = (Comprador) jcbComprador.getSelectedItem();
         
-       String fila = (String) jcbFila.getSelectedItem();
-       String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
+        String fila = (String) jcbFila.getSelectedItem();
        
+        String numeroStr = ((String) jcbNumero.getSelectedItem()).split(" ")[0];
         int numero = Integer.parseInt(numeroStr);
         
-        int idSala = proyS.getSala().getIdSala();
-    
-        Asiento asiento = asientoD.buscarAsiento(idSala, fila, numero);
+        Asiento asiento = asientoD.buscarAsientoProy(proyS.getIdProyeccion(), fila, numero);
         
-        if (asiento.isDisponible()) {
-
-
+        if (asiento == null) {
+            
+            JOptionPane.showMessageDialog(this, "El asiento no existe para este proyecto.");
+            return;
+        }
+        
+        if (!asiento.isDisponible()) {
+            
+            JOptionPane.showMessageDialog(this, "Asiento ocupado en esta proyeccion.");
+            return;
+        }
             LocalDate fechaC = LocalDate.now();
        
             LocalDate fechaF = fechaC.plusDays(3);
@@ -456,12 +476,8 @@ public class TicketV extends javax.swing.JInternalFrame {
             
             tD.generarTicket(ticket);
         
-            
-                asientoD.ocuparAsiento(asiento.getIdAsiento());
-            } else {
-            
-                JOptionPane.showMessageDialog(this, "Asiento Ocupado");
-            }
+             asientoD.ocuparAsiento(asiento.getIdAsiento());
+
         
      }
     
@@ -522,7 +538,9 @@ public class TicketV extends javax.swing.JInternalFrame {
                 t.getFechaCompra() ,
                 t.getPrecio() , 
                 t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
-                t.getFechaFuncion()
+                t.getFechaFuncion() ,
+                t.getAsientoComprado().getFila() ,
+                t.getAsientoComprado().getNúmero()
             });
         }
     }
@@ -542,7 +560,9 @@ public class TicketV extends javax.swing.JInternalFrame {
                 t.getFechaCompra() ,
                 t.getPrecio() , 
                 t.getAsientoComprado().getProy().getPelicula().getTitulo() ,
-                t.getFechaFuncion()
+                t.getFechaFuncion() , 
+                t.getAsientoComprado().getFila() ,
+                t.getAsientoComprado().getNúmero()
             });
         }
     }
@@ -572,6 +592,24 @@ public class TicketV extends javax.swing.JInternalFrame {
     
     // -------------- Vista --------------
     
+    private void cargarCombosS(){
+        jcbSalas.removeAllItems();
+        
+        SalaData salaD = new SalaData ();
+        
+        Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
+                
+        if(proy == null){
+            return;
+        }
+        
+        Sala sala = proy.getSala();
+        
+        if (sala != null) {
+            
+            jcbSalas.addItem(proy.getSala());
+        }
+    }
     
     private void cargarComboP(){
         
@@ -609,7 +647,7 @@ public class TicketV extends javax.swing.JInternalFrame {
             return;
         }
                 
-        List <String> filas = asientoD.obtenerFilas(proy.getIdProyeccion());
+        List <String> filas = tD.obtenerFilas(proy.getIdProyeccion());
         
         for (String f: filas) {
             
@@ -623,11 +661,8 @@ public class TicketV extends javax.swing.JInternalFrame {
         
         Proyeccion proy = (Proyeccion) jcbProyeccion.getSelectedItem();
         
-        List<String> numeros = asientoD.obtenerNumeros(proy.getIdProyeccion(), fila);
+        List<String> numeros = tD.obtenerNumero(proy.getIdProyeccion(), fila);
         
-        if (asientoD.asientoDisponible(proy.getIdProyeccion())) {
-            
-        }
         for (String num : numeros) {
             
             jcbNumero.addItem(num);
@@ -640,7 +675,8 @@ public class TicketV extends javax.swing.JInternalFrame {
         jcbProyeccion.setSelectedIndex(-1);
         jcbFila.setSelectedIndex(-1);
         jcbNumero.setSelectedIndex(-1);
-        jtSala.setText("");
+        jcbSalas.setSelectedIndex(-1);
+        
     }
     
     private void cabecera(){
